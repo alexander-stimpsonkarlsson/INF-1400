@@ -2,9 +2,12 @@ import pygame
 from pygame.math import Vector2 as vec 
 
 # screen spesifications
-(width, height) = (1645, 1200)
-screen = pygame.display.set_mode((width, height))
-screen_res = (width, height)
+
+(screen_width, screen_height) = (1645, 1200)
+screen = pygame.display.set_mode((screen_width, screen_height))
+screen_res = (screen_width, screen_height)
+
+# initialize pygame stuff
 
 pygame.init()
 pygame.display.flip()
@@ -49,6 +52,68 @@ class blue_brick(pygame.sprite.Sprite):
         self.h = 65
         self.rect = pygame.Rect(self.x,self.y,self.w,self.h)
 
+# Class for the player, A.K.A the paddle
+
+class Player(pygame.sprite.Sprite): 
+    
+    def __init__(self,screen,x,y):
+
+        super().__init__()
+
+        self.color = red_color
+        self.x = x
+        self.y = y
+        self.w = 150
+        self.h = 5
+        self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
+    
+    def control(self):
+        key = pygame.key.get_pressed()
+
+        if key[pygame.K_LEFT]:
+            self.rect.move_ip(-25, 0)
+        if key[pygame.K_RIGHT]:
+            self.rect.move_ip(25, 0)
+
+# Creates class for the ball
+
+class Ball(pygame.sprite.Sprite):
+
+    def __init__(self, screen, center):
+
+        super().__init__()
+
+        self.color = white_color
+        self.x = 40
+        self.y = 600
+        self.center = (self.x, self.y)
+        self.radius = 20
+        self.speedx = 10
+        self.speedy = 10
+        
+        
+    def update_pos(self):
+
+        self.x += self.speedx
+        self.y += self.speedy
+        self.center = (self.x, self.y)
+
+        if self.x < self.radius or self.x > screen_width - self.radius:
+            self.speedx *= -1
+        if self.y < self.radius or self.y > screen_height - self.radius:
+            self.speedy *= -1
+        #om ball.x >= player.x and ball.x <= player.x + player.w
+        #om ball
+            #self.speedx *= -1
+            #self.speedy *= -1
+
+    def collision(self):
+
+        if self.x > plar.x and self.xye < player.x + player.w:
+            self.speedx *= -1
+        if self.y > player.y and self.y < player.y + player.w:
+            self.speedy *= -1
+
 # Creates a list for purple bricks
 
 purple_bricks = []  
@@ -77,53 +142,17 @@ for row in range(2):
         blue_bricks.append(brick)
     blue_brick_y_start += 65 * 2 + 10
 
-# Class for the player, A.K.A the paddle
+# Creates the player
 
-class Player(pygame.sprite.Sprite): 
-    
-    def __init__(self,screen,x,y):
-
-        super().__init__()
-
-        self.color = red_color
-        self.x = x
-        self.y = y
-        self.w = 150
-        self.h = 5
-        self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
-        self.screen_h = pygame.display.get_surface().get_height()
-        self.screen_w = pygame.display.get_surface().get_width()
-    
-    def control(self):
-        key = pygame.key.get_pressed()
-        
-        if key[pygame.K_LEFT]:
-            self.rect.move_ip(-25, 0)
-        if key[pygame.K_RIGHT]:
-            self.rect.move_ip(25, 0)
-        
-# The balls center
-
-ball_position = [40, 600]
-
-# Creates class for the ball
-"""
-class Ball(pygame.sprite.Sprite):
-
-    def __init__(self, screen, center):
-
-        super().__init__()
-
-        self.color = white_color
-        self.
-"""
-
-
-    
-    
 player = Player(screen, 800, 1100)
 
-# opens window, closes when quit
+# Creates the ball 
+
+ball = Ball(screen, [40, 600])
+
+
+# Opens window, closes when quit
+
 running = True                
 
 while running:          
@@ -132,14 +161,27 @@ while running:
             running = False
         
     # Draws background 
+
     screen.blit(background_image, [0, 0])  
     
     # Draws the player
 
     pygame.draw.rect(screen, player.color, player.rect)
     
-    # Enables player movement
+    # Draws the ball
 
+    pygame.draw.circle(screen, ball.color, ball.center, ball.radius)
+
+    # Updates ball position
+
+    ball.update_pos()
+
+    # Checks for collision between ball and player
+
+    ball.collision()
+
+    # Enables player movement
+        
     player.control()
 
     # Draws the bricks to the window
