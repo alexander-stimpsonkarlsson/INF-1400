@@ -18,7 +18,11 @@ clock = pygame.time.Clock()
 game_over_image = pygame.image.load("pics/GAME OVER.png")
 game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
 
+# Music 
 
+pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.1)
 
 # Some working colors 
 
@@ -70,6 +74,7 @@ class Player():
         self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
     
     def control(self):
+
         key = pygame.key.get_pressed()
 
         if key[pygame.K_LEFT]:
@@ -77,6 +82,10 @@ class Player():
         if key[pygame.K_RIGHT]:
             self.rect.move_ip(25, 0)
 
+        if self.rect.x < 0:                       # keeps player within screen  
+            self.rect.x = 0
+        if self.rect.x + self.w > screen_width:
+            self.rect.x = screen_width - self.w
 
 # Creates class for the ball
 
@@ -113,12 +122,19 @@ class Ball():
 
     def collision(self):
 
+        #y_pos = 
+        #pos_1 = player.rect.x + player.rect.width / 2
+
+        #if self.x + self.radius >= pos_1
+
         if self.x + self.radius >= player.rect.x and \
            self.x + self.radius <= player.rect.x + player.rect.width and \
            self.y + self.radius >= player.rect.y and \
            self.y + self.radius <= player.rect.y + player.rect.height: 
             self.speedy *= -1
         
+        # Brick collisions
+
         for blue_brick in blue_bricks: 
             if self.x + self.radius >= blue_brick.rect.x and \
                self.x - self.radius <= blue_brick.rect.x + blue_brick.rect.width and \
