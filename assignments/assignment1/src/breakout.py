@@ -1,4 +1,5 @@
 import pygame
+import sys
 from pygame.math import Vector2 as vec 
 
 # screen spesifications
@@ -14,6 +15,10 @@ pygame.display.flip()
 pygame.display.set_caption("EXTREME BREAKOUT")
 background_image = pygame.image.load("pics/galaxy.png")
 clock = pygame.time.Clock() 
+game_over_image = pygame.image.load("pics/GAME OVER.png")
+game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
+
+
 
 # Some working colors 
 
@@ -22,13 +27,12 @@ blue_color = (0, 30, 240)
 white_color = (255, 255, 255)
 red_color = (240, 0, 30)
 
+
 # Class for purple bricks
 
-class purple_brick(pygame.sprite.Sprite): 
+class purple_brick(): 
 
     def __init__(self,screen,x,y):
-
-        super().__init__()
 
         self.color = purple_color
         self.x = x
@@ -37,13 +41,12 @@ class purple_brick(pygame.sprite.Sprite):
         self.h = 65
         self.rect = pygame.Rect(self.x,self.y,self.w,self.h)
 
+
 # Class for blue bricks
 
-class blue_brick(pygame.sprite.Sprite):
+class blue_brick():
 
     def __init__(self, screen, x, y):
-        
-        super().__init__()
 
         self.color = blue_color
         self.x = x
@@ -52,18 +55,17 @@ class blue_brick(pygame.sprite.Sprite):
         self.h = 65
         self.rect = pygame.Rect(self.x,self.y,self.w,self.h)
 
+
 # Class for the player, A.K.A the paddle
 
-class Player(pygame.sprite.Sprite): 
+class Player(): 
     
     def __init__(self,screen,x,y):
-
-        super().__init__()
 
         self.color = red_color
         self.x = x
         self.y = y
-        self.w = 150
+        self.w = 200
         self.h = 5
         self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
     
@@ -75,22 +77,20 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_RIGHT]:
             self.rect.move_ip(25, 0)
 
+
 # Creates class for the ball
 
-class Ball(pygame.sprite.Sprite):
+class Ball():
 
     def __init__(self, screen, center):
-
-        super().__init__()
 
         self.color = white_color
         self.x = 40
         self.y = 600
         self.center = (self.x, self.y)
         self.radius = 20
-        self.speedx = 10
-        self.speedy = 10
-        
+        self.speedx = 8
+        self.speedy = 8
         
     def update_pos(self):
 
@@ -100,19 +100,41 @@ class Ball(pygame.sprite.Sprite):
 
         if self.x < self.radius or self.x > screen_width - self.radius:
             self.speedx *= -1
-        if self.y < self.radius or self.y > screen_height - self.radius:
+        if self.y < self.radius:
             self.speedy *= -1
-        #om ball.x >= player.x and ball.x <= player.x + player.w
-        #om ball
-            #self.speedx *= -1
-            #self.speedy *= -1
+
+        # If ball goes outside screen 
+
+        if self.y > screen_width + self.radius:
+            blue_bricks.clear()
+            purple_bricks.clear()
+            screen.blit(game_over_image, (0, 0))
+            
 
     def collision(self):
 
-        if self.x > plar.x and self.xye < player.x + player.w:
-            self.speedx *= -1
-        if self.y > player.y and self.y < player.y + player.w:
+        if self.x + self.radius >= player.rect.x and \
+           self.x + self.radius <= player.rect.x + player.rect.width and \
+           self.y + self.radius >= player.rect.y and \
+           self.y + self.radius <= player.rect.y + player.rect.height: 
             self.speedy *= -1
+        
+        for blue_brick in blue_bricks: 
+            if self.x + self.radius >= blue_brick.rect.x and \
+               self.x - self.radius <= blue_brick.rect.x + blue_brick.rect.width and \
+               self.y + self.radius >= blue_brick.rect.y and \
+               self.y - self.radius <= blue_brick.rect.y + blue_brick.rect.height:
+                blue_bricks.remove(blue_brick)
+                self.speedy *= -1
+        
+        for purple_brick in purple_bricks: 
+            if self.x + self.radius >= purple_brick.rect.x and \
+               self.x - self.radius <= purple_brick.rect.x + purple_brick.rect.width and \
+               self.y + self.radius >= purple_brick.rect.y and \
+               self.y - self.radius <= purple_brick.rect.y + purple_brick.rect.height:
+                purple_bricks.remove(purple_brick)
+                self.speedy *= -1
+        
 
 # Creates a list for purple bricks
 
@@ -149,7 +171,6 @@ player = Player(screen, 800, 1100)
 # Creates the ball 
 
 ball = Ball(screen, [40, 600])
-
 
 # Opens window, closes when quit
 
@@ -194,10 +215,11 @@ while running:
 
 
     # Sets game to 30 ticks 
-    clock.tick(30)  
-
+    clock.tick(60)  
 
     pygame.display.flip()
+
+pygame.quit()
     
 
     
