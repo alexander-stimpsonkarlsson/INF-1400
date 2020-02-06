@@ -20,9 +20,9 @@ game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
 
 # Music 
 
-#pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
-#pygame.mixer.music.play(-1)
-#pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.1)
 
 # Some working colors 
 
@@ -97,7 +97,7 @@ class Ball():
         self.x = 40
         self.y = 600
         self.center = (self.x, self.y)
-        self.radius = 20
+        self.radius = 15
         self.speedx = 8
         self.speedy = 6
         
@@ -125,17 +125,19 @@ class Ball():
         self_posx = self.x + self.radius
         self_posy = self.y + self.radius
 
-        # 4 different positions on the player paddle
+        # 6 different positions on the player paddle
 
-        paddle_pos1 = player.rect.x + player.rect.width / 4
-        paddle_pos2 = paddle_pos1 + player.rect.width / 4
-        paddle_pos3 = paddle_pos2 + player.rect.width / 4
-        paddle_pos4 = paddle_pos3 + player.rect.width / 4
+        paddle_pos1 = player.rect.x + player.rect.width / 6
+        paddle_pos2 = paddle_pos1 + player.rect.width / 6
+        paddle_pos3 = paddle_pos2 + player.rect.width / 6
+        paddle_pos4 = paddle_pos3 + player.rect.width / 6
+        paddle_pos5 = paddle_pos4 + player.rect.width / 6
+        paddle_pos6 = paddle_pos5 + player.rect.width / 6
         
         paddle_y = player.rect.y + player.rect.height
 
         # Player collisions
-
+                                                # Postion 1
         if self_posx >= player.rect.x and \
            self_posx <= paddle_pos1 and \
            self_posy >=player.rect.y and \
@@ -143,29 +145,32 @@ class Ball():
             self.speedy = 8
             self.speedy *= -1
             if self.speedx < 0:
-                self.speedx = -10
+                self.speedx = -11
             else: 
-                self.speedx = 10
+                self.speedx = 11
+                                                # Position 2
         if self_posx >= paddle_pos1 and \
            self_posx <= paddle_pos2 and \
            self_posy >=player.rect.y and \
            self_posy <= paddle_y:
-            self.speedy = 10
+            self.speedy = 9
             self.speedy *= -1
             if self.speedx < 0:
-                self.speedx = -6
+                self.speedx = -7
             else: 
-                self.speedx = 6
+                self.speedx = 7
+                                                # Position 3
         if self_posx >= paddle_pos2 and \
            self_posx <= paddle_pos3 and \
            self_posy >=player.rect.y and \
            self_posy <= paddle_y:
             self.speedy = 10
             self.speedy *= -1
-            if self.speedx > 0: 
-                self.speedx = 6
+            if self.speedx < 0: 
+                self.speedx = -4
             else: 
-                self.speedx = -6
+                self.speedx = 4
+                                                # Postion 4
         if self_posx >= paddle_pos3 and \
            self_posx <= paddle_pos4 and \
            self_posy >=player.rect.y and \
@@ -173,11 +178,32 @@ class Ball():
             self.speedy = 10
             self.speedy *= -1
             if self.speedx > 0:
-                self.speedx = 10
+                self.speedx = 4
             else: 
-                self.speedx = -10
+                self.speedx = -4
+                                                # Position 5
+        if self_posx >= paddle_pos4 and \
+           self_posx <= paddle_pos5 and \
+           self_posy >=player.rect.y and \
+           self_posy <= paddle_y:
+            self.speedy = 9
+            self.speedy *= -1
+            if self.speedx > 0:
+                self.speedx = 7
+            else: 
+                self.speedx = -7
+                                                # Postion 6
+        if self_posx >= paddle_pos5 and \
+           self_posx <= paddle_pos6 and \
+           self_posy >=player.rect.y and \
+           self_posy <= paddle_y:
+            self.speedy = 8
+            self.speedy *= -1
+            if self.speedx > 0:
+                self.speedx = 11
+            else: 
+                self.speedx = -11
         
-    
     def brick_collision(self):
 
         # Brick collisions
@@ -187,18 +213,17 @@ class Ball():
                self.x - self.radius <= blue_brick.rect.x + blue_brick.rect.width and \
                self.y + self.radius >= blue_brick.rect.y and \
                self.y - self.radius <= blue_brick.rect.y + blue_brick.rect.height:
-                blue_bricks.remove(blue_brick)
                 self.speedy *= -1
+                blue_bricks.remove(blue_brick)
         
         for purple_brick in purple_bricks: 
             if self.x + self.radius >= purple_brick.rect.x and \
                self.x - self.radius <= purple_brick.rect.x + purple_brick.rect.width and \
                self.y + self.radius >= purple_brick.rect.y and \
                self.y - self.radius <= purple_brick.rect.y + purple_brick.rect.height:
-                purple_bricks.remove(purple_brick)
                 self.speedy *= -1
-        
-
+                purple_bricks.remove(purple_brick)
+                
 # Creates a list for purple bricks
 
 purple_bricks = []  
