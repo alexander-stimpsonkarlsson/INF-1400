@@ -22,7 +22,7 @@ game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
 
 pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(0.5)
 
 # Some working colors 
 
@@ -78,9 +78,9 @@ class Player():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_LEFT]:
-            self.rect.move_ip(-25, 0)
+            self.rect.move_ip(-18, 0)
         if key[pygame.K_RIGHT]:
-            self.rect.move_ip(25, 0)
+            self.rect.move_ip(18, 0)
 
         if self.rect.x < 0:                       # keeps player within screen  
             self.rect.x = 0
@@ -142,7 +142,7 @@ class Ball():
            self_posx <= paddle_pos1 and \
            self_posy >=player.rect.y and \
            self_posy <= paddle_y:
-            self.speedy = 8
+            self.speedy = 7
             self.speedy *= -1
             if self.speedx < 0:
                 self.speedx = -11
@@ -167,9 +167,9 @@ class Ball():
             self.speedy = 10
             self.speedy *= -1
             if self.speedx < 0: 
-                self.speedx = -4
+                self.speedx = -3
             else: 
-                self.speedx = 4
+                self.speedx = 3
                                                 # Postion 4
         if self_posx >= paddle_pos3 and \
            self_posx <= paddle_pos4 and \
@@ -178,9 +178,9 @@ class Ball():
             self.speedy = 10
             self.speedy *= -1
             if self.speedx > 0:
-                self.speedx = 4
+                self.speedx = 3
             else: 
-                self.speedx = -4
+                self.speedx = -3
                                                 # Position 5
         if self_posx >= paddle_pos4 and \
            self_posx <= paddle_pos5 and \
@@ -197,7 +197,7 @@ class Ball():
            self_posx <= paddle_pos6 and \
            self_posy >=player.rect.y and \
            self_posy <= paddle_y:
-            self.speedy = 8
+            self.speedy = 7
             self.speedy *= -1
             if self.speedx > 0:
                 self.speedx = 11
@@ -299,13 +299,11 @@ while running:
 
     # Draws the bricks to the window
 
-    for brick in purple_bricks: #draws all bricks in list
+    for brick in purple_bricks: 
         pygame.draw.rect(screen, brick.color, brick.rect)
     for brick in blue_bricks:
         pygame.draw.rect(screen, brick.color, brick.rect)
     
-
-
     # Sets game to 30 ticks 
     clock.tick(60)  
 
