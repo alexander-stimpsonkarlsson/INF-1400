@@ -1,6 +1,6 @@
 import pygame
 import sys
-from pygame.math import Vector2 as vec 
+
 
 # screen spesifications
 
@@ -274,13 +274,13 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        
+                
     # Draws background 
 
     screen.blit(background_image, [0, 0])  
     
     # Draws higscore
-    highscore = font.render(str(ball.Highscore) + "/ 48", running, purple_color, blue_color)
+    highscore = font.render("Score: " + str(ball.Highscore) + "/ 48", running, purple_color, blue_color)
     textHighscore = highscore.get_rect()
     textHighscore.center = (1500, 1000)
     screen.blit(highscore, textHighscore)
