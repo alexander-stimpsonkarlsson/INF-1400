@@ -17,12 +17,13 @@ background_image = pygame.image.load("pics/galaxy.png")
 clock = pygame.time.Clock() 
 game_over_image = pygame.image.load("pics/GAME OVER.png")
 game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
+font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Music 
 
-pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
-pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.5)
+#pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
+#pygame.mixer.music.play(-1)
+#pygame.mixer.music.set_volume(0.5)
 
 # Some working colors 
 
@@ -100,6 +101,7 @@ class Ball():
         self.radius = 15
         self.speedx = 8
         self.speedy = 6
+        self.Highscore = 0
         
     def update_pos(self):
 
@@ -215,6 +217,8 @@ class Ball():
                self.y - self.radius < blue_brick.rect.y + blue_brick.rect.height:
                 self.speedy *= -1
                 blue_bricks.remove(blue_brick)
+                self.Highscore += 1
+                print (self.Highscore, "/ 48")
         
         for purple_brick in purple_bricks: 
             if self.x + self.radius > purple_brick.rect.x and \
@@ -223,6 +227,8 @@ class Ball():
                self.y - self.radius < purple_brick.rect.y + purple_brick.rect.height:
                 self.speedy *= -1
                 purple_bricks.remove(purple_brick)
+                self.Highscore += 1
+                print (self.Highscore, "/ 48")
                 
 # Creates a list for purple bricks
 
@@ -262,7 +268,7 @@ ball = Ball(screen, [40, 600])
 
 # Opens window, closes when quit
 
-running = True                
+running = True             
 
 while running:          
     for event in pygame.event.get():
@@ -273,6 +279,12 @@ while running:
 
     screen.blit(background_image, [0, 0])  
     
+    # Draws higscore
+    highscore = font.render(str(ball.Highscore) + "/ 48", running, purple_color, blue_color)
+    textHighscore = highscore.get_rect()
+    textHighscore.center = (1500, 1000)
+    screen.blit(highscore, textHighscore)
+
     # Draws the player
 
     pygame.draw.rect(screen, player.color, player.rect)
