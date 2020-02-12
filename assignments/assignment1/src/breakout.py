@@ -17,6 +17,7 @@ background_image = pygame.image.load("pics/galaxy.png")
 clock = pygame.time.Clock() 
 game_over_image = pygame.image.load("pics/GAME OVER.png")
 game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
+font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Music 
 
@@ -267,7 +268,7 @@ ball = Ball(screen, [40, 600])
 
 # Opens window, closes when quit
 
-running = True                
+running = True             
 
 while running:          
     for event in pygame.event.get():
@@ -278,6 +279,12 @@ while running:
 
     screen.blit(background_image, [0, 0])  
     
+    # Draws higscore
+    highscore = font.render(str(ball.Highscore) + "/ 48", running, purple_color, blue_color)
+    textHighscore = highscore.get_rect()
+    textHighscore.center = (1500, 1000)
+    screen.blit(highscore, textHighscore)
+
     # Draws the player
 
     pygame.draw.rect(screen, player.color, player.rect)
