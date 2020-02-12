@@ -209,18 +209,18 @@ class Ball():
         # Brick collisions
 
         for blue_brick in blue_bricks: 
-            if self.x + self.radius >= blue_brick.rect.x and \
-               self.x - self.radius <= blue_brick.rect.x + blue_brick.rect.width and \
-               self.y + self.radius >= blue_brick.rect.y and \
-               self.y - self.radius <= blue_brick.rect.y + blue_brick.rect.height:
+            if self.x + self.radius > blue_brick.rect.x and \
+               self.x - self.radius < blue_brick.rect.x + blue_brick.rect.width and \
+               self.y + self.radius > blue_brick.rect.y and \
+               self.y - self.radius < blue_brick.rect.y + blue_brick.rect.height:
                 self.speedy *= -1
                 blue_bricks.remove(blue_brick)
         
         for purple_brick in purple_bricks: 
-            if self.x + self.radius >= purple_brick.rect.x and \
-               self.x - self.radius <= purple_brick.rect.x + purple_brick.rect.width and \
-               self.y + self.radius >= purple_brick.rect.y and \
-               self.y - self.radius <= purple_brick.rect.y + purple_brick.rect.height:
+            if self.x + self.radius > purple_brick.rect.x and \
+               self.x - self.radius < purple_brick.rect.x + purple_brick.rect.width and \
+               self.y + self.radius > purple_brick.rect.y and \
+               self.y - self.radius < purple_brick.rect.y + purple_brick.rect.height:
                 self.speedy *= -1
                 purple_bricks.remove(purple_brick)
                 
@@ -230,10 +230,10 @@ purple_bricks = []
 purple_brick_y_start = 5
 purple_brick_x_avstand = 5
 
-# Creats purple bricks for two different rows
+# Creates purple bricks for two different rows
 
 for row in range(2):
-    for x in range(0, 8):
+    for x in range(8):
         brick = purple_brick(screen, 5 + x * (200 + purple_brick_x_avstand), purple_brick_y_start)
         purple_bricks.append(brick)
     purple_brick_y_start += 65 * 2 + 10
@@ -247,7 +247,7 @@ blue_brick_x_avstand = 5
 # Creates blue bricks for two different rows
 
 for row in range(2):
-    for x in range(0, 16):
+    for x in range(16):
         brick = blue_brick(screen, 5 + x * (97.5 + blue_brick_x_avstand), blue_brick_y_start)
         blue_bricks.append(brick)
     blue_brick_y_start += 65 * 2 + 10
