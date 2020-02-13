@@ -146,10 +146,7 @@ class Ball():
            self_posy <= paddle_y:
             self.speedy = 7
             self.speedy *= -1
-            if self.speedx < 0:
-                self.speedx = -11
-            else: 
-                self.speedx = 11
+            self.speedx = -11
                                                 # Position 2
         if self_posx >= paddle_pos1 and \
            self_posx <= paddle_pos2 and \
@@ -157,10 +154,7 @@ class Ball():
            self_posy <= paddle_y:
             self.speedy = 9
             self.speedy *= -1
-            if self.speedx < 0:
-                self.speedx = -7
-            else: 
-                self.speedx = 7
+            self.speedx = -7
                                                 # Position 3
         if self_posx >= paddle_pos2 and \
            self_posx <= paddle_pos3 and \
@@ -168,10 +162,7 @@ class Ball():
            self_posy <= paddle_y:
             self.speedy = 10
             self.speedy *= -1
-            if self.speedx < 0: 
-                self.speedx = -3
-            else: 
-                self.speedx = 3
+            self.speedx = -3
                                                 # Postion 4
         if self_posx >= paddle_pos3 and \
            self_posx <= paddle_pos4 and \
@@ -179,10 +170,7 @@ class Ball():
            self_posy <= paddle_y:
             self.speedy = 10
             self.speedy *= -1
-            if self.speedx > 0:
-                self.speedx = 3
-            else: 
-                self.speedx = -3
+            self.speedx = 3
                                                 # Position 5
         if self_posx >= paddle_pos4 and \
            self_posx <= paddle_pos5 and \
@@ -190,10 +178,7 @@ class Ball():
            self_posy <= paddle_y:
             self.speedy = 9
             self.speedy *= -1
-            if self.speedx > 0:
-                self.speedx = 7
-            else: 
-                self.speedx = -7
+            self.speedx = 7
                                                 # Postion 6
         if self_posx >= paddle_pos5 and \
            self_posx <= paddle_pos6 and \
@@ -201,10 +186,7 @@ class Ball():
            self_posy <= paddle_y:
             self.speedy = 7
             self.speedy *= -1
-            if self.speedx > 0:
-                self.speedx = 11
-            else: 
-                self.speedx = -11
+            self.speedx = 11
         
     def brick_collision(self):
 
