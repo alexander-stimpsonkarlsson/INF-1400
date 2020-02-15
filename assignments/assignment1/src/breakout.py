@@ -21,9 +21,9 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Music 
 
-#pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
-#pygame.mixer.music.play(-1)
-#pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(2)
 
 # Some working colors 
 
