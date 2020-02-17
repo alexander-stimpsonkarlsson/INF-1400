@@ -18,6 +18,8 @@ clock = pygame.time.Clock()
 game_over_image = pygame.image.load("pics/GAME OVER.png")
 game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
 font = pygame.font.Font('freesansbold.ttf', 32)
+win_image = pygame.image.load("pics/winscreen.png")
+win_image = pygame.transform.scale(win_image, (1645, 1200))
 
 # Music 
 
@@ -200,7 +202,6 @@ class Ball():
                 self.speedy *= -1
                 blue_bricks.remove(blue_brick)
                 self.Highscore += 1
-                print (self.Highscore, "/ 48")
         
         for purple_brick in purple_bricks: 
             if self.x + self.radius > purple_brick.rect.x and \
@@ -210,7 +211,6 @@ class Ball():
                 self.speedy *= -1
                 purple_bricks.remove(purple_brick)
                 self.Highscore += 1
-                print (self.Highscore, "/ 48")
                 
 # Creates a list for purple bricks
 
@@ -297,6 +297,11 @@ while running:
         pygame.draw.rect(screen, brick.color, brick.rect)
     for brick in blue_bricks:
         pygame.draw.rect(screen, brick.color, brick.rect)
+
+    if len(purple_bricks) == 0 and \
+       len(blue_bricks) == 0:
+        screen.blit(win_image, [0, 0])
+
     
     # Sets game to 30 ticks 
     clock.tick(60)  
