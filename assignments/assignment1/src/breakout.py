@@ -8,16 +8,25 @@ import sys
 screen = pygame.display.set_mode((screen_width, screen_height))
 screen_res = (screen_width, screen_height)
 
-# initialize pygame stuff
+# Initialize pygame stuff
 
 pygame.init()
 pygame.display.flip()
 pygame.display.set_caption("EXTREME BREAKOUT")
 background_image = pygame.image.load("pics/galaxy.png")
 clock = pygame.time.Clock() 
+
+# Game over image
+
 game_over_image = pygame.image.load("pics/GAME OVER.png")
 game_over_image = pygame.transform.scale(game_over_image, (1645, 1200))
+
+# Font for highscore text
+
 font = pygame.font.Font('freesansbold.ttf', 32)
+
+# Image for win screen
+
 win_image = pygame.image.load("pics/winscreen.png")
 win_image = pygame.transform.scale(win_image, (1645, 1200))
 
