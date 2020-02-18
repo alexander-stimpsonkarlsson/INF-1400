@@ -298,17 +298,18 @@ while running:
     for brick in blue_bricks:
         pygame.draw.rect(screen, brick.color, brick.rect)
 
+    # Checks if both lists are empty, if so the window changes to win_image
+
     if len(purple_bricks) == 0 and \
        len(blue_bricks) == 0:
         screen.blit(win_image, [0, 0])
 
-    
-    # Sets game to 30 ticks 
+    # Sets game to 60 ticks 
     clock.tick(60)  
 
     pygame.display.flip()
 
-pygame.quit()
+
     
 
     
