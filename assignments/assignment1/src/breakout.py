@@ -32,9 +32,9 @@ win_image = pygame.transform.scale(win_image, (1645, 1200))
 
 # Music 
 
-pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
-pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(2)
+##pygame.mixer.music.load('sound/Push it to the Limit (Scarface).wav')
+##pygame.mixer.music.play(-1)
+##pygame.mixer.music.set_volume(2)
 
 # Some working colors 
 
@@ -310,7 +310,7 @@ while running:
     # Checks if both lists are empty, if so the window changes to win_image
 
     if len(purple_bricks) == 0 and \
-       len(blue_bricks) == 0:
+       len(blue_bricks) == 0 and ball.y < screen_width + ball.radius:
         screen.blit(win_image, [0, 0])
 
     # Sets game to 60 ticks 
