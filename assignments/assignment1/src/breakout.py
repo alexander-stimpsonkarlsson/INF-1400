@@ -1,6 +1,4 @@
 import pygame
-import sys
-
 
 # screen spesifications
 
