@@ -9,7 +9,6 @@ black_color = (0, 0, 0)
 
 (screen_width, screen_height) = (1400, 1000)                        # screen spesifications.
 
-
 def main():                                                         # Function for running the program.
 
     pygame.init()                                                   # Initialize pygame.
@@ -23,7 +22,7 @@ def main():                                                         # Function f
     running = True
     time = pygame.time.Clock()
 
-    boid = Boid(screen, 500, 500)
+    boid = Boid(screen)
 
     while running:
         for event in pygame.event.get():                            # Game loop initialize. 
@@ -37,7 +36,8 @@ def main():                                                         # Function f
         menu_text.center = (screen_width/2, screen_height/2)
         screen.blit(menu, menu_text)
 
-        boid.update()
+        if pygame.mouse.get_pressed()[0]:                           # If right click, draws boid
+            boid.update()
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
