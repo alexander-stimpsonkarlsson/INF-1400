@@ -1,18 +1,25 @@
 import pygame 
 import random
-from param import param1
+from pygame.locals import *
 from boid import Boid
 
-white_color = (255, 255, 255)
-red_color = (240, 0, 30)
-black_color = (0, 0, 0)
+SCREEN_WIDTH = 1400
+SCREEN_HEIGHT = 1000                   
 
-(screen_width, screen_height) = (1400, 1000)                        # screen spesifications.
+WHITE_COLOR = (255, 255, 255)
+RED_COLOR = (240, 0, 30)
+BLACK_COLOR = (0, 0, 0)
+
+#white_color = (255, 255, 255)
+#red_color = (240, 0, 30)
+#black_color = (0, 0, 0)
+
+#(screen_width, screen_height) = (1400, 1000)                        # screen spesifications.
 
 def main():                                                         # Function for running the program.
 
     pygame.init()                                                   # Initialize pygame.
-    screen_size = [screen_width, screen_height]                     # Defines screen area.
+    screen_size = [SCREEN_WIDTH, SCREEN_HEIGHT]                     # Defines screen area.
     screen = pygame.display.set_mode(screen_size)                   # Represents the screen.
     background_image = pygame.image.load("Pics/bcg.png")
     background_image = pygame.transform.scale(background_image, (1400, 1000))
@@ -22,22 +29,24 @@ def main():                                                         # Function f
     running = True
     time = pygame.time.Clock()
 
-    boid = Boid(screen)
+    flock = []
 
     while running:
         for event in pygame.event.get():                            # Game loop initialize. 
             if event.type == pygame.QUIT:
-                running = False
+                running = False 
 
-        screen.blit(background_image, (0, 0))                       # Draws background.    
+            if event.type == MOUSEBUTTONDOWN and event.button == 1: # When button is clicked
+                boids = Boid(screen)                                # Adds one boid to the list
+                flock.append(boids)
 
-        menu = font.render("Press SPACE to start", running, white_color, black_color) 
-        menu_text = menu.get_rect()
-        menu_text.center = (screen_width/2, screen_height/2)
-        screen.blit(menu, menu_text)
+        screen.blit(background_image, (0, 0))                       # Draws background.   
 
-        if pygame.mouse.get_pressed()[0]:                           # If right click, draws boid
-            boid.update()
+        for boids in flock:                                     # Draws all boids
+            boids.update()
+        
+        if flock:                                                    # If list is not empty, boids move
+            boids.movement()
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
@@ -48,7 +57,5 @@ if __name__ == "__main__":                                          # Calls main
     main()                                                          # the game.
 
     
-
-
 
 
