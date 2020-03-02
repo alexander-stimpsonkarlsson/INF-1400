@@ -26,7 +26,7 @@ class Boid(pygame.sprite.Sprite):
         self.speed = (random.uniform(MIN_SPEED, MAX_SPEED),
                       random.uniform(MIN_SPEED, MAX_SPEED))         # Boid is spawned with a random speed
         self.direction = random.randint(0, 359)                     # Boid is spawned with a random direction
-
+        
     #def align(self):    
 
     #def separation(self):
@@ -35,7 +35,7 @@ class Boid(pygame.sprite.Sprite):
 
     def movement(self):
 
-        self.pos = self.speed
+        self.speed = self.pos
         
         if abs(SCREEN_WIDTH / 2 - self.pos[0]) > SCREEN_WIDTH / 2 - 20:
             #if self.pos[0] < SCREEN_WIDTH / 2:
