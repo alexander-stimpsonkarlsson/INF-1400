@@ -37,15 +37,16 @@ def main():                                                         # Function f
                 running = False 
 
             if event.type == MOUSEBUTTONDOWN and event.button == 1: # When button is clicked
-                boids = Boid()                                # Adds one boid to the list
-                flock.append(boids)
+                boid = Boid()                                # Adds one boid to the list
+                flock.append(boid)
 
         screen.blit(background_image, (0, 0))                       # Draws background.   
 
-        for boids in flock:                                     # Draws all boids
-            boids.draw(screen)
-            boids.movement()
-            boids.avoid_edge()
+        for boid in flock:                                     # Draws all boids
+            boid.draw(screen)
+            boid.movement()
+            boid.edge()
+            boid.behaviour(flock)
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
