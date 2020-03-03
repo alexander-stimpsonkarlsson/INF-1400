@@ -44,9 +44,9 @@ def main():                                                         # Function f
 
         for boid in flock:                                     # Draws all boids
             boid.draw(screen)
-            boid.movement()
+            boid.movement(flock)
             boid.edge()
-            boid.behaviour(flock)
+            #boid.behaviour(flock)
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
