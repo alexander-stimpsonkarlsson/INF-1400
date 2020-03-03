@@ -10,12 +10,6 @@ WHITE_COLOR = (255, 255, 255)
 RED_COLOR = (240, 0, 30)
 BLACK_COLOR = (0, 0, 0)
 
-#white_color = (255, 255, 255)
-#red_color = (240, 0, 30)
-#black_color = (0, 0, 0)
-
-#(screen_width, screen_height) = (1400, 1000)                        # screen spesifications.
-
 def main():                                                         # Function for running the program.
 
     pygame.init()                                                   # Initialize pygame.
@@ -53,6 +47,8 @@ def main():                                                         # Function f
                                                                     # higher than 60 fps/ticks. 
         pygame.display.flip()                                       # Updates surface area
 
+    pygame.quit()
+    
 if __name__ == "__main__":                                          # Calls main function and starts
     main()                                                          # the game.
 
