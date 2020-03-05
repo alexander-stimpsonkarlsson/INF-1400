@@ -185,6 +185,7 @@ def example_code():
                                     circle_b_position, circle_b_radius)
         if impulse:
             draw_vec_from_ball(impulse, (0, 255, 255))
+            print(impulse)
 
         pygame.display.update()
 

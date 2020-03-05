@@ -20,7 +20,6 @@ class Boid():
 
         x = pygame.mouse.get_pos()[0]                               # x posistion of mouse
         y = pygame.mouse.get_pos()[1]                               # y posiition of mouse
-        self.fov = 180                                              # Field of view                                            
 
         self.pos = Vector2(x, y)                                    # Boids position is mouse position
 
@@ -34,6 +33,8 @@ class Boid():
                  random.uniform(par.MIN_DIR, par.MAX_DIR))
         self.dir = Vector2(*angle)                                  # Direction of bird when spawned 
 
+        #r = 
+
     def flock_steer(self, flock):                                   # Move towards center of the flock
 
         steer_twrd = Vector2(0, 0)
@@ -41,10 +42,11 @@ class Boid():
         average_dir = Vector2(0, 0)
         pos = self.pos
 
-        for boid in flock:     
+        for boid in flock:    
             if (boid.pos != pos):                                
-                distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])    
-                if distance <= par.GROUP_DISCTANCE:
+                distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
+                print(distance)
+                if distance <= par.GROUP_DISCTANCE and (boid.pos != pos): 
                     average_dir[0] += boid.pos[0]
                     average_dir[1] += boid.pos[1]
                     flock_size += 1
@@ -53,8 +55,8 @@ class Boid():
             average_dir[0] /= flock_size
             average_dir[1] /= flock_size
 
-        steer_twrd = ((average_dir[0] - pos[0]) * par.GROUP,           # Boids will try and steer towards the average 
-                 (average_dir[1] - pos[1]) * par.GROUP)                # direction of all boids in the area
+        steer_twrd = ((average_dir[0] + pos[0]) * par.GROUP,           # Boids will try and steer towards the average 
+                      (average_dir[1] + pos[1]) * par.GROUP)                # direction of all boids in the area
 
         return steer_twrd
 
@@ -66,7 +68,7 @@ class Boid():
         for boid in flock:
             if (boid.pos != pos):
                 distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])
-                if distance <= par.SEPARATION_DISTANCE:
+                if distance <= par.SEPARATION_DISTANCE and boid.pos != pos:
                     separation[0] -= (boid.pos[0] - pos[0]) * par.SEPARATION
                     separation[1] -= (boid.pos[1] - pos[1]) * par.SEPARATION
             
@@ -81,7 +83,7 @@ class Boid():
         for boid in flock:
             if (boid.pos != pos):
                 distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])   # length of the vector from origin 
-                if distance <= par.ALIGN_DISTANCE:                                  # to point
+                if distance <= par.ALIGN_DISTANCE and boid.pos != pos:                                  # to point
                     alignment[0] += boid.speed[0]                       
                     alignment[1] += boid.speed[1]
                     local_size += 1
@@ -111,19 +113,31 @@ class Boid():
 
     def movement(self, flock):
 
-        self.speed = tuple(sum(x)for x in zip(self.flock_steer(flock),      # Calculates speed depending on 
-                                              self.flock_separation(flock), # the value of the three 
-                                              self.flock_alignment(flock))) # movement functions
+        #print(self.flock_steer(flock))
+        #for boid in flock:
+        #    if (boid.pos != self.pos):
+                #self.speed = tuple(sum(x)for x in zip(self.flock_steer(flock),      # Calculates speed depending on 
+                #                                   self.flock_separation(flock), # the value of the three 
+                #                                    self.flock_alignment(flock))) # movement functions
+        self.speed += self.flock_steer(flock)
+        self.speed += self.flock_alignment(flock)
+        self.speed += self.flock_separation(flock)
+
+        if self.speed.length() > par.MAX_SPEED or \
+           self.speed.length() < par.MIN_SPEED:
+
+            
+            self.speed[0] = self.speed[0] / (self.speed.normalize()[0] * par.MAX_SPEED)
+            self.speed[1] = self.speed[1] / (self.speed.normalize()[1] * par.MAX_SPEED)
+            #self.speed = self.speed.normalize()
+            #self.speed[0] = self.speed[0] / (self.speed[0] * par.MAX_SPEED)
+            #self.speed[1] = self.speed[1] / (self.speed[1] * par.MAX_SPEED)
 
         self.pos += self.speed
 
-        if self.speed[0] > par.MAX_SPEED and self.speed[1] > par.MAX_SPEED: # Restricts the speed a boid can have
-            self.speed = self.speed.normalize_ip()
-            self.pos[0] = self.speed[0] / (self.speed[0] * par.MAX_SPEED)
-            self.pos[1] = self.speed[1] / (self.speed[1] * par.MAX_SPEED)
-
-        self.dir = math.degrees(math.atan2(self.speed[0], self.speed[1]))   # Gets direction of iamge
+        self.dir = math.degrees(math.atan2(self.speed[0], self.speed[1]))   # Gets direction of image
         self.image = pygame.transform.rotate(self.org_img, -self.dir)       # Rotates image in the right direction                                     
+
 
     def draw(self, screen):
 
