@@ -2,22 +2,15 @@ import pygame
 import random
 from pygame.locals import *
 from boid import Boid
-import param as par
-
-SCREEN_WIDTH = 1400
-SCREEN_HEIGHT = 1000                   
-
-WHITE_COLOR = (255, 255, 255)
-RED_COLOR = (240, 0, 30)
-BLACK_COLOR = (0, 0, 0)
+import param as P
 
 def main():                                                         # Function for running the program.
 
     pygame.init()                                                   # Initialize pygame.
-    screen_size = [par.SCREEN_WIDTH, par.SCREEN_HEIGHT]                     # Defines screen area.
+    screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]                     # Defines screen area.
     screen = pygame.display.set_mode(screen_size)                   # Represents the screen.
     background_image = pygame.image.load("Pics/bcg.png")
-    background_image = pygame.transform.scale(background_image, (1400, 1000))
+    background_image = pygame.transform.scale(background_image, (P.SCREEN_WIDTH, P.SCREEN_HEIGHT))
     pygame.display.set_caption("Boids n' voids")
     font = pygame.font.Font('freesansbold.ttf', 32)                 
     
@@ -39,8 +32,9 @@ def main():                                                         # Function f
 
         for boid in flock:                                          # Draws all boids and adds movement
             boid.draw(screen)
-            boid.movement(flock)
             boid.edge()
+            boid.movement(flock)
+
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 

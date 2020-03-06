@@ -1,10 +1,10 @@
 import pygame
 import random
 import math
-from pygame import Vector2
-import param as par
+from pygame import Vector2 as V
+import param as P
 
-screen = pygame.display.set_mode([par.SCREEN_WIDTH, par.SCREEN_WIDTH])
+screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 
 # Class for boids
 
@@ -13,40 +13,37 @@ class Boid():
     def __init__(self):
         super().__init__()
 
-        self.image = pygame.Surface([par.SCREEN_WIDTH, par.SCREEN_HEIGHT])  # Where the image is to be
+        self.image = pygame.Surface([P.SCREEN_WIDTH, P.SCREEN_HEIGHT])  # Where the image is to be
         self.image = pygame.image.load("Pics/rotate1.png")          # Loads boid image
         self.image = pygame.transform.scale(self.image, (25, 25))   # Transform image to given scale
-        self.org_img = self.image                                   # Used for rotating image 
+        self.rotation_image = self.image                                   # Used for rotating image 
 
         x = pygame.mouse.get_pos()[0]                               # x posistion of mouse
         y = pygame.mouse.get_pos()[1]                               # y posiition of mouse
 
-        self.pos = Vector2(x, y)                                    # Boids position is mouse position
+        self.pos = V(x, y)                                    # Boids position is mouse position
 
-        self.rect = self.image.get_rect(center = self.pos)          # Are of image defined
+        self.rect = self.image.get_rect(center =(10, 10))          # Are of image defined
         
-        speed = (random.uniform(par.MIN_SPEED, par.MAX_SPEED),              # Random (x, y) 
-                 random.uniform(par.MIN_SPEED, par.MAX_SPEED))
-        self.speed = Vector2(*speed)        
+        speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),              # Random (x, y) 
+                 random.uniform(P.MIN_SPEED, P.MAX_SPEED))
+        self.speed = V(*speed)        
 
-        angle = (random.uniform(par.MIN_DIR, par.MAX_DIR),                  # Random (x, y)
-                 random.uniform(par.MIN_DIR, par.MAX_DIR))
-        self.dir = Vector2(*angle)                                  # Direction of bird when spawned 
-
-        #r = 
+        self.dir = random.randint(P.MIN_DIR, P.MAX_DIR)
+        self.angle = self.dir                                # Direction of bird when spawned 
+ 
 
     def flock_steer(self, flock):                                   # Move towards center of the flock
 
-        steer_twrd = Vector2(0, 0)
+        steer_twrd = V(0, 0)
         flock_size = 0                                              # Count of boids in flock
-        average_dir = Vector2(0, 0)
+        average_dir = V(0, 0)
         pos = self.pos
 
-        for boid in flock:    
-            if (boid.pos != pos):                                
-                distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
-                print(distance)
-                if distance <= par.GROUP_DISCTANCE and (boid.pos != pos): 
+        if len(flock) != 0:                                         # Updates as long as list is not empty
+            for boid in flock:                                   
+                length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
+                if length <= P.GROUP_DISCTANCE: 
                     average_dir[0] += boid.pos[0]
                     average_dir[1] += boid.pos[1]
                     flock_size += 1
@@ -55,35 +52,35 @@ class Boid():
             average_dir[0] /= flock_size
             average_dir[1] /= flock_size
 
-        steer_twrd = ((average_dir[0] + pos[0]) * par.GROUP,           # Boids will try and steer towards the average 
-                      (average_dir[1] + pos[1]) * par.GROUP)                # direction of all boids in the area
+        steer_twrd = ((average_dir[0] + pos[0]) * P.GROUP,           # Boids will try and steer towards the average 
+                      (average_dir[1] + pos[1]) * P.GROUP)           # direction of all boids in the area
 
-        return steer_twrd
+        return tuple(map(sum, zip(self.speed, steer_twrd)))
 
     def flock_separation(self, flock):                             # Boids will try and avoid each other
 
-        separation = Vector2(0, 0)
+        separation = V(0, 0)
         pos = self.pos
 
-        for boid in flock:
-            if (boid.pos != pos):
-                distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])
-                if distance <= par.SEPARATION_DISTANCE and boid.pos != pos:
-                    separation[0] -= (boid.pos[0] - pos[0]) * par.SEPARATION
-                    separation[1] -= (boid.pos[1] - pos[1]) * par.SEPARATION
+        if len(flock) != 0:                                         # Updates as long as list is not empty
+            for boid in flock:
+                length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])
+                if length <= P.SEPARATION_DISTANCE:
+                    separation[0] -= (boid.pos[0] - pos[0]) * P.SEPARATION
+                    separation[1] -= (boid.pos[1] - pos[1]) * P.SEPARATION
             
-        return separation
+        return tuple(map(sum, zip(self.speed, separation)))
 
     def flock_alignment(self, flock):                               # Will try to allign with nearby boids
 
-        alignment = Vector2(0, 0)
+        alignment = V(0, 0)
         local_size = 0                                              # Count how many boids are in the boids area
         pos = self.pos
 
-        for boid in flock:
-            if (boid.pos != pos):
-                distance = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])   # length of the vector from origin 
-                if distance <= par.ALIGN_DISTANCE and boid.pos != pos:                                  # to point
+        if len(flock) != 0:                                         # Updates as long as list is not empty, len is length
+            for boid in flock:
+                length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])   # length of the vector from origin 
+                if length <= P.ALIGN_DISTANCE:                                   # to point
                     alignment[0] += boid.speed[0]                       
                     alignment[1] += boid.speed[1]
                     local_size += 1
@@ -92,24 +89,49 @@ class Boid():
             alignment[0] /= local_size
             alignment[1] /= local_size
         
-        alignment = ((alignment[0] - self.speed[0]) * par.ALIGN,        # Boids will try and match speed with  
-                     (alignment[1] - self.speed[1]) * par.ALIGN)        # other boids
+        alignment = ((alignment[0] - self.speed[0]) * P.ALIGN,        # Boids will try and match speed with  
+                     (alignment[1] - self.speed[1]) * P.ALIGN)        # other boids
         
-        return alignment
+        return tuple(map(sum, zip(self.speed, alignment)))
 
 
     def edge(self):                                                 # Boids will re-appear on the other side
                                                                     # when they go out of the screen
-        pos = self.pos
-        if pos[0] > par.SCREEN_WIDTH:
-            pos[0] = 0
-        elif pos[0] < 0:
-            pos[0] = par.SCREEN_WIDTH
-
-        if pos[1] > par.SCREEN_HEIGHT:
-            pos[1] = 0
-        elif pos[1] < 0:
-            pos[1] = par.SCREEN_HEIGHT
+        new_pos = list(self.pos)                                    # Since tuples are not changeable, i have to make 
+                                                                    # a list from the tuple given, then change the variable
+        if new_pos[0] > P.SCREEN_WIDTH:                             # in the list and add that to the tuple
+            new_pos[0] = 0
+            self.pos = tuple(new_pos)
+        elif new_pos[0] < 0:
+            new_pos[0] = P.SCREEN_WIDTH
+            self.pos = tuple(new_pos)
+        if new_pos[1] > P.SCREEN_HEIGHT:
+            new_pos[1] = 0
+            self.pos = tuple(new_pos)
+        elif new_pos[1] < 0:
+            new_pos[1] = P.SCREEN_HEIGHT
+            self.pos = tuple(new_pos)
+            
+        #if new_pos[0] + P.WALL_DIST > P.SCREEN_WIDTH:                
+        #    avoid = -1 
+        #    avoid *= P.MAX_SPEED * P.AVOID_OBJECT
+        #    new_speed[0] = avoid
+        #    self.speed = tuple(new_speed)
+        #elif new_pos[0] - P.WALL_DIST < 0:
+        #    avoid = 1
+        #    avoid *= P.MAX_SPEED * P.AVOID_OBJECT
+        #    new_speed[0] = avoid
+        #    self.speed = tuple(new_speed)
+        #if new_pos[1] + P.WALL_DIST > P.SCREEN_HEIGHT:
+        #    avoid = -1
+        #    avoid *= P.MAX_SPEED * P.AVOID_OBJECT
+        #    new_speed[1] = avoid
+        #    self.speed = tuple(new_speed)
+        #elif new_speed[1] - P.WALL_DIST < 0:
+        #    avoid = 1
+        #    avoid *= P.MAX_SPEED * P.AVOID_OBJECT
+        #    new_speed[1] = avoid
+        #    self.speed = tuple(new_speed)
 
     def movement(self, flock):
 
@@ -117,27 +139,28 @@ class Boid():
         #for boid in flock:
         #    if (boid.pos != self.pos):
                 #self.speed = tuple(sum(x)for x in zip(self.flock_steer(flock),      # Calculates speed depending on 
-                #                                   self.flock_separation(flock), # the value of the three 
-                #                                    self.flock_alignment(flock))) # movement functions
-        self.speed += self.flock_steer(flock)
-        self.speed += self.flock_alignment(flock)
-        self.speed += self.flock_separation(flock)
+                #self.flock_separation(flock), # the value of the three 
+                #self.flock_alignment(flock))) # movement functions
+        #if len(flock) != 0:
+            #or boid in flock:
+                #length = math.hypot(boid.pos[0] - self.pos[0], boid.pos[1] - self.pos[1])
+                #if length <= P.ACTIVATION_DISTANCE:
 
-        if self.speed.length() > par.MAX_SPEED or \
-           self.speed.length() < par.MIN_SPEED:
+        self.speed = self.flock_steer(flock)
+        self.speed = self.flock_alignment(flock)
+        self.speed = self.flock_separation(flock)
 
-            
-            self.speed[0] = self.speed[0] / (self.speed.normalize()[0] * par.MAX_SPEED)
-            self.speed[1] = self.speed[1] / (self.speed.normalize()[1] * par.MAX_SPEED)
-            #self.speed = self.speed.normalize()
-            #self.speed[0] = self.speed[0] / (self.speed[0] * par.MAX_SPEED)
-            #self.speed[1] = self.speed[1] / (self.speed[1] * par.MAX_SPEED)
+        self.speed = self.speed[0] + random.uniform(P.MIN_RANDOM, P.MAX_RANDOM), self.speed[1] + random.uniform(P.MIN_RANDOM, P.MAX_RANDOM)
 
-        self.pos += self.speed
+        self.speed = tuple(max(min(x, P.MAX_SPEED), P.MIN_SPEED) for x in self.speed)
+        print(self.speed)
+    
+        self.pos = tuple(sum(x) for x in zip(self.pos, self.speed))
 
-        self.dir = math.degrees(math.atan2(self.speed[0], self.speed[1]))   # Gets direction of image
-        self.image = pygame.transform.rotate(self.org_img, -self.dir)       # Rotates image in the right direction                                     
-
+        self.dir = math.degrees(math.atan2(self.speed[1], self.speed[0]))   # Gets direction of image
+        self.image = pygame.transform.rotate(self.rotation_image, -self.dir)       # Rotates image in the right direction                                   
+        self.rect = self.image.get_rect(center=(self.rect.center))
+        self.rect.center = self.pos
 
     def draw(self, screen):
 
