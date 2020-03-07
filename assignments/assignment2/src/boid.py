@@ -23,7 +23,7 @@ class Boid(pygame.sprite.Sprite):
 
         self.pos = V(x, y)                                    # Boids position is mouse position
 
-        self.rect = self.image.get_rect(center =(10, 10))          # Are of image defined
+        self.rect = self.image.get_rect(center =(5, 10))          # Are of image defined
         
         speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),              # Random (x, y) 
                  random.uniform(P.MIN_SPEED, P.MAX_SPEED))
@@ -70,6 +70,7 @@ class Boid(pygame.sprite.Sprite):
                     separation[1] -= (boid.pos[1] - pos[1]) * P.SEPARATION
                 
         return tuple(map(sum, zip(self.speed, separation)))
+         
 
     def flock_alignment(self):                               # Will try to allign with nearby boids
 
@@ -93,7 +94,6 @@ class Boid(pygame.sprite.Sprite):
                      (alignment[1] - self.speed[1]) * P.ALIGN)        # other boids
         
         return tuple(map(sum, zip(self.speed, alignment)))
-
 
     #def edge(self):                                                 # Boids will re-appear on the other side
                                                                     # when they go out of the screen
@@ -160,9 +160,9 @@ class Boid(pygame.sprite.Sprite):
                 #length = math.hypot(boid.pos[0] - self.pos[0], boid.pos[1] - self.pos[1])
                 #if length <= P.ACTIVATION_DISTANCE:
         #if abs(P.SCREEN_WIDTH / 2 - self.pos[0]) > P.SCREEN_WIDTH / 2 - P.WALL_DIST:
-        #    repel = 1 if self.pos[0] < P.SCREEN_WIDTH / 2 else -1
-        #    repel *= P.MAX_SPEED * P.AVOID_OBJECT
-        #    self.speed = self.speed[0] + repel, self.speed[1]
+            #repel = 1 if self.pos[0] < P.SCREEN_WIDTH / 2 else -1
+            #repel *= P.MAX_SPEED * P.AVOID_OBJECT
+            #self.speed = self.speed[0] + repel, self.speed[1]
         #if abs(P.SCREEN_HEIGHT / 2 - self.pos[1]) > P.SCREEN_HEIGHT / 2 - P.WALL_DIST:
             #repel = 1 if self.pos[1] < P.SCREEN_HEIGHT / 2 else -1
             #repel *= P.MAX_SPEED * P.AVOID_OBJECT
@@ -171,10 +171,12 @@ class Boid(pygame.sprite.Sprite):
         self.speed = self.flock_steer()
         self.speed = self.flock_alignment()
         self.speed = self.flock_separation()
-
+        
         self.speed = self.speed[0] + random.uniform(P.MIN_RANDOM, P.MAX_RANDOM), self.speed[1] + random.uniform(P.MIN_RANDOM, P.MAX_RANDOM)
 
         self.speed = tuple(max(min(x, P.MAX_SPEED), P.MIN_SPEED) for x in self.speed)
+        #self.speed = tuple((random.uniform(self.speed[0], self.speed[1]), 
+                           #random.uniform(P.MIN_SPEED, P.MAX_SPEED)))
         print(self.speed)
     
         self.pos = tuple(sum(x) for x in zip(self.pos, self.speed))
