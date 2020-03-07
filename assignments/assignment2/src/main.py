@@ -17,7 +17,8 @@ def main():                                                         # Function f
     running = True
     time = pygame.time.Clock()
 
-    flock = []
+    flock = pygame.sprite.Group()
+    Boid.box = flock
 
     while running:
         for event in pygame.event.get():                            # Game loop initialize. 
@@ -25,16 +26,12 @@ def main():                                                         # Function f
                 running = False 
 
             if event.type == MOUSEBUTTONDOWN and event.button == 1: # When button is clicked
-                boid = Boid()                                       # Adds one boid to the list
-                flock.append(boid)
-
+                Boid()                                              # Adds one boid to the sprite group
+                
         screen.blit(background_image, (0, 0))                       # Draws background.   
 
-        for boid in flock:                                          # Draws all boids and adds movement
-            boid.draw(screen)
-            boid.edge()
-            boid.movement(flock)
-
+        flock.draw(screen)
+        flock.update()
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
