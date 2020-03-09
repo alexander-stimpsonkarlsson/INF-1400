@@ -32,21 +32,18 @@ class Boid(pygame.sprite.Sprite):
 
     def flock_steer(self):                                   # Move towards center of the flock
 
-        steer_twrd = V(0, 0)
-        flock_size = 0                                              # Count of boids in flock
+        steer_twrd = V(0, 0)                                             
         average_dir = V(0, 0)
         pos = self.pos
 
-        if len(self.box) != 1:                                         # Updates as long as list is not empty
-            for boid in self.box:                                   
+        for boid in self.box:                         
+            if boid.pos != self.pos:          
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
-                if boid.pos != self.pos:
-                    if length < P.GROUP_DISCTANCE: 
-                        average_dir += boid.pos
-                        flock_size += 1
+                if length < P.GROUP_DISCTANCE: 
+                    average_dir += boid.pos
 
-        if flock_size > 0:
-            average_dir /= flock_size
+        if len(self.box) > 0:
+            average_dir /= len(self.box)
 
         steer_twrd = (average_dir + pos) / P.GROUP
 
@@ -57,68 +54,68 @@ class Boid(pygame.sprite.Sprite):
         separation = V(0, 0)
         pos = self.pos
 
-        if len(self.box) != 1:                                         # Updates as long as list is not empty
-            for boid in self.box:
+        for boid in self.box:
+            if boid.pos != self.pos:
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
-                if boid.pos != self.pos:
-                    if length < P.SEPARATION_DISTANCE:
-                        separation -= (boid.pos - pos) * P.SEPARATION
+                if length < P.SEPARATION_DISTANCE:
+                    separation -= (boid.pos - pos) * P.SEPARATION
                 
         return separation
          
     def flock_alignment(self):                               # Will try to allign with nearby boids
 
-        alignment = V(0, 0)
-        local_size = 0                                              # Count how many boids are in the boids area
+        alignment = V(0, 0)                             
         pos = self.pos
-
-        if len(self.box) != 1:                                         # Updates as long as list is not empty, len is length
-            for boid in self.box:
+                       
+        for boid in self.box:
+            if boid.pos != self.pos:
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
-                if boid.pos != self.pos:
-                    if length <= P.ALIGN_DISTANCE:                                   # to point
-                        alignment += boid.speed
-                        local_size += 1
+                if length <= P.ALIGN_DISTANCE:                                   # to point
+                    alignment += boid.speed
         
-        if local_size > 0:
-            alignment /= local_size
+        if len(self.box) > 0:
+            alignment /= len(self.box)
 
         alignment = (alignment - self.speed) * P.ALIGN
         
         return alignment
 
-    #def place(self):
-
-        #place_pref = V(200, 100)
-
-        #return (place_pref - self.pos) / 100
-
     def update(self):
 
-        if self.pos[0] < 0 + P.WALL_DIST: 
-            self.speed[0] = 10
-        if self.pos[0] > P.SCREEN_WIDTH - P.WALL_DIST:
-            self.speed[0] = -10
-        if self.pos[1] < 0 + P.WALL_DIST: 
-            self.speed[1] = 10
-        if self.pos[1] > P.SCREEN_HEIGHT - P.WALL_DIST:
-            self.speed[1] = -10
+        #if (P.SCREEN_WIDTH / 2 - self.pos[0]) > P.SCREEN_WIDTH / 2 - P.WALL_DIST:
+        #    avoid = 1 if self.pos[0] < P.SCREEN_WIDTH / 2 else -1
+        #    avoid = avoid * P.MAX_SPEED * P.AVOID_OBJECT
+        #    self.speed = self.speed[0] + avoid, self.speed[1]
+        #if (P.SCREEN_HEIGHT / 2 - self.pos[1]) > P.SCREEN_HEIGHT / 2 - P.WALL_DIST:
+        #    avoid = 1 if self.pos[1] < P.SCREEN_HEIGHT / 2 else -1
+        #    avoid = avoid * P.MAX_SPEED * P.AVOID_OBJECT
+        #    self.speed = self.speed[0], self.speed[1] + avoid
+    
+        #if self.pos[0] <= 0 + P.WALL_DIST: 
+        #    self.speed[0] = 10
+        #if self.pos[0] >= P.SCREEN_WIDTH - P.WALL_DIST:
+        #    self.speed[0] = -10
+        #if self.pos[1] <= 0 + P.WALL_DIST: 
+        #    self.speed[1] = 10
+        #if self.pos[1] >= P.SCREEN_HEIGHT - P.WALL_DIST:
+        #    self.speed[1] = -10
 
+        if self.pos[0] > P.SCREEN_WIDTH:
+            self.pos[0] = 0
+        if self.pos[0] < 0:
+            self.pos[0] = P.SCREEN_WIDTH
+            
+        if self.pos[1] > P.SCREEN_HEIGHT:
+            self.pos[1] = 0
+        if self.pos[1] < 0:
+            self.pos[1] = P.SCREEN_HEIGHT
+        
         steer = self.flock_steer()
         align = self.flock_alignment()
         separate = self.flock_separation()
 
         self.speed = self.speed + steer + align + separate                  # Calculates speed depening on the three flock variables
 
-        
-        #if abs(P.SCREEN_WIDTH / 2 - self.pos[0]) > P.SCREEN_WIDTH / 2 - P.WALL_DIST:
-        #    avoid = 1 if self.pos[0] < P.SCREEN_WIDTH / 2 else -1
-        #    avoid = avoid * P.MAX_SPEED * P.AVOID_OBJECT
-        #    self.speed = self.speed[0] + avoid, self.speed[1]
-        #if abs(P.SCREEN_HEIGHT / 2 - self.pos[1]) > P.SCREEN_HEIGHT / 2 - P.WALL_DIST:
-            #avoid = 1 if self.pos[1] < P.SCREEN_HEIGHT / 2 else -1
-            #avoid = avoid * P.MAX_SPEED * P.AVOID_OBJECT
-            #self.speed = self.speed[0], self.speed[1] + avoid
 
         if self.speed.length() > P.MAX_SPEED:                               # Limit for speed
             self.speed = (self.speed / self.speed.length()) * P.MAX_SPEED

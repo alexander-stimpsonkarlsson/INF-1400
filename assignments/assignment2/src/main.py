@@ -4,6 +4,7 @@ from pygame.locals import *
 from boid import Boid
 import param as P
 
+
 def main():                                                         # Function for running the program.
 
     pygame.init()                                                   # Initialize pygame.
@@ -30,8 +31,8 @@ def main():                                                         # Function f
                 
         screen.blit(background_image, (0, 0))                       # Draws background.   
 
-        flock.draw(screen)
         flock.update()
+        flock.draw(screen)
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
@@ -43,6 +44,6 @@ def main():                                                         # Function f
 if __name__ == "__main__":                                          # Calls main function and starts
     main()                                                          # the game.
 
-    
+
 
 
