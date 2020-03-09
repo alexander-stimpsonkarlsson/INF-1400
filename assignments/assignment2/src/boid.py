@@ -3,130 +3,78 @@ import random
 import math
 from pygame import Vector2 as V
 import param as P
+from parent import Basic
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 
 # Class for boids
 
-class Boid(pygame.sprite.Sprite):
+class Boid(Basic):
 
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self, self.box)
+        super().__init__("reddit/rotate1.png", 25, 25)
 
-        self.image = pygame.Surface([P.SCREEN_WIDTH, P.SCREEN_HEIGHT])  # Where the image is to be
-        self.image = pygame.image.load("Pics/rotate1.png")          # Loads boid image
-        self.image = pygame.transform.scale(self.image, (25, 25))   # Transform image to given scale
-        self.rotation_image = self.image                            # Used for rotating image 
-
-        x = pygame.mouse.get_pos()[0]                               # x posistion of mouse
-        y = pygame.mouse.get_pos()[1]                               # y posiition of mouse
-
-        self.pos = x, y                                    # Boids position is mouse position
-
-        self.rect = self.image.get_rect(center =(5, 10))          # Are of image defined
-        
-        speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),              # Random (x, y) 
-                 random.uniform(P.MIN_SPEED, P.MAX_SPEED))
-        self.speed = V(*speed)   
-        self.dir = self.speed     
-
-    def flock_steer(self):                                   # Move towards center of the flock
+    def flock_steer(self, flock):                                   # Move towards center of the flock
 
         steer_twrd = V(0, 0)                                             
         average_dir = V(0, 0)
         pos = self.pos
+        count = 0
 
-        for boid in self.box:                         
+        for boid in flock:                         
             if boid.pos != self.pos:          
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
                 if length < P.GROUP_DISCTANCE: 
                     average_dir += boid.pos
+                    count += 1
 
-        if len(self.box) > 0:
-            average_dir /= len(self.box)
+        if count > 0:
+            average_dir /= count
+            average_dir = V(*average_dir)
 
-        steer_twrd = (average_dir + pos) / P.GROUP
+        steer_twrd = (average_dir - pos) * P.GROUP
 
         return steer_twrd
-
-    def flock_separation(self):                             # Boids will try and avoid each other
-
-        separation = V(0, 0)
-        pos = self.pos
-
-        for boid in self.box:
-            if boid.pos != self.pos:
-                length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
-                if length < P.SEPARATION_DISTANCE:
-                    separation -= (boid.pos - pos) * P.SEPARATION
-                
-        return separation
          
-    def flock_alignment(self):                               # Will try to allign with nearby boids
+    def flock_alignment(self, flock):                               # Will try to allign with nearby boids
 
         alignment = V(0, 0)                             
         pos = self.pos
+        count = 0
                        
-        for boid in self.box:
+        for boid in flock:
             if boid.pos != self.pos:
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
                 if length <= P.ALIGN_DISTANCE:                                   # to point
                     alignment += boid.speed
+                    count += 1
         
-        if len(self.box) > 0:
-            alignment /= len(self.box)
+        if count > 0:
+            alignment /= count
+            alignment = V(*alignment)
 
-        alignment = (alignment - self.speed) * P.ALIGN
+        alignment = (alignment + self.speed) * P.ALIGN
         
         return alignment
-
-    def update(self):
-
-        #if (P.SCREEN_WIDTH / 2 - self.pos[0]) > P.SCREEN_WIDTH / 2 - P.WALL_DIST:
-        #    avoid = 1 if self.pos[0] < P.SCREEN_WIDTH / 2 else -1
-        #    avoid = avoid * P.MAX_SPEED * P.AVOID_OBJECT
-        #    self.speed = self.speed[0] + avoid, self.speed[1]
-        #if (P.SCREEN_HEIGHT / 2 - self.pos[1]) > P.SCREEN_HEIGHT / 2 - P.WALL_DIST:
-        #    avoid = 1 if self.pos[1] < P.SCREEN_HEIGHT / 2 else -1
-        #    avoid = avoid * P.MAX_SPEED * P.AVOID_OBJECT
-        #    self.speed = self.speed[0], self.speed[1] + avoid
-    
-        #if self.pos[0] <= 0 + P.WALL_DIST: 
-        #    self.speed[0] = 10
-        #if self.pos[0] >= P.SCREEN_WIDTH - P.WALL_DIST:
-        #    self.speed[0] = -10
-        #if self.pos[1] <= 0 + P.WALL_DIST: 
-        #    self.speed[1] = 10
-        #if self.pos[1] >= P.SCREEN_HEIGHT - P.WALL_DIST:
-        #    self.speed[1] = -10
-
-        if self.pos[0] > P.SCREEN_WIDTH:
-            self.pos[0] = 0
-        if self.pos[0] < 0:
-            self.pos[0] = P.SCREEN_WIDTH
-            
-        if self.pos[1] > P.SCREEN_HEIGHT:
-            self.pos[1] = 0
-        if self.pos[1] < 0:
-            self.pos[1] = P.SCREEN_HEIGHT
+                 
+    def update(self, flock):
         
-        steer = self.flock_steer()
-        align = self.flock_alignment()
-        separate = self.flock_separation()
+        steer = self.flock_steer(flock)
+        align = self.flock_alignment(flock)
+        separate = self.flock_separation(flock, P.SEPARATION_DISTANCE)
+        edge = self.edge()
 
-        self.speed = self.speed + steer + align + separate                  # Calculates speed depening on the three flock variables
+        self.speed = self.speed + (steer*2) + align + separate + (edge*2)           # Calculates speed depening on the three flock variables
 
-
-        if self.speed.length() > P.MAX_SPEED:                               # Limit for speed
-            self.speed = (self.speed / self.speed.length()) * P.MAX_SPEED
+        self.speed = self.speed.normalize() * P.MAX_SPEED                       # Limit for speed
 
         self.pos += self.speed
-        #self.pos += self.place()
 
         self.dir = math.degrees(math.atan2(self.speed[1], self.speed[0]))   # Gets direction of image
         self.image = pygame.transform.rotate(self.rotation_image, -self.dir)       # Rotates image in the right direction                                   
         self.rect = self.image.get_rect(center=(self.rect.center))
         self.rect.center = self.pos
-  
+
+        screen.blit(self.image, self.pos)
 
 

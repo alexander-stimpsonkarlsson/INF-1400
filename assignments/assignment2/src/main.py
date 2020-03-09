@@ -3,6 +3,7 @@ import random
 from pygame.locals import *
 from boid import Boid
 import param as P
+from hoik import Hoik
 
 
 def main():                                                         # Function for running the program.
@@ -10,7 +11,7 @@ def main():                                                         # Function f
     pygame.init()                                                   # Initialize pygame.
     screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]                     # Defines screen area.
     screen = pygame.display.set_mode(screen_size)                   # Represents the screen.
-    background_image = pygame.image.load("Pics/bcg.png")
+    background_image = pygame.image.load("reddit/bcg.png")
     background_image = pygame.transform.scale(background_image, (P.SCREEN_WIDTH, P.SCREEN_HEIGHT))
     pygame.display.set_caption("Boids n' voids")
     font = pygame.font.Font('freesansbold.ttf', 32)                 
@@ -18,8 +19,8 @@ def main():                                                         # Function f
     running = True
     time = pygame.time.Clock()
 
-    flock = pygame.sprite.Group()
-    Boid.box = flock
+    flock = []
+    hoikers = []
 
     while running:
         for event in pygame.event.get():                            # Game loop initialize. 
@@ -27,12 +28,20 @@ def main():                                                         # Function f
                 running = False 
 
             if event.type == MOUSEBUTTONDOWN and event.button == 1: # When button is clicked
-                Boid()                                              # Adds one boid to the sprite group
-                
+                boid = Boid()
+                flock.append(boid)                                              # Adds one boid to the sprite group
+            
+            if event.type == MOUSEBUTTONDOWN and event.button == 3:
+                hoik = Hoik()
+                hoikers.append(hoik)
+
         screen.blit(background_image, (0, 0))                       # Draws background.   
 
-        flock.update()
-        flock.draw(screen)
+        for boid in flock:
+            boid.update(flock)
+
+        for hoik in hoikers:
+            hoik.update(flock)
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
