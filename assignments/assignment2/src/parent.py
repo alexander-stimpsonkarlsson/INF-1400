@@ -18,35 +18,35 @@ class Basic():
         x = pygame.mouse.get_pos()[0]                               # x posistion of mouse
         y = pygame.mouse.get_pos()[1]                               # y posiition of mouse
 
-        self.pos = x, y                                    # Boids position is mouse position
+        self.pos = x, y                                             # Object position is mouse position
 
-        self.rect = self.image.get_rect(center =(5, 10))          # Are of image defined
+        self.rect = self.image.get_rect(center =(5, 10))            # Are of image defined
             
-        speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),              # Random (x, y) 
+        speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),          # Random (x, y) speed 
                 random.uniform(P.MIN_SPEED, P.MAX_SPEED))
         self.speed = V(*speed)   
-        self.dir = self.speed     
+        self.dir = self.speed                                       # Direction is speed, used for rotating image later
 
-    def edge(self):
+    def edge(self):                                                 # Keeps objects within screen
 
         x = 0
         y = 0 
 
         if self.rect.centerx < 0 + P.WALL_DIST: 
             x = 1
-        if self.rect.centerx > P.SCREEN_WIDTH - P.WALL_DIST:
+        if self.rect.centerx > P.SCREEN_WIDTH - (1.5*P.WALL_DIST):
             x = -1
         if self.rect.centery < 0 + P.WALL_DIST:
             y = 1
-        if self.rect.centery > P.SCREEN_HEIGHT - P.WALL_DIST:
+        if self.rect.centery > P.SCREEN_HEIGHT - (1.5*P.WALL_DIST):
             y = -1
         
         new_dir = V(x, y)
 
         return new_dir
     
-    def flock_separation(self, flock, dist):                             # Boids will try and avoid each other
-
+    def flock_separation(self, flock, dist):                        # Boids will try and avoid each other, also used
+                                                                    # with hoiks for them to detect other boids
         separation = V(0, 0)
         pos = self.pos
 

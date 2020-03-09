@@ -1,5 +1,4 @@
 import pygame 
-import random
 from pygame.locals import *
 from boid import Boid
 import param as P

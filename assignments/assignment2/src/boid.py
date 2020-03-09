@@ -45,7 +45,7 @@ class Boid(Basic):
         for boid in flock:
             if boid.pos != self.pos:
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
-                if length <= P.ALIGN_DISTANCE:                                   # to point
+                if length <= P.ALIGN_DISTANCE:                                   
                     alignment += boid.speed
                     count += 1
         
@@ -62,19 +62,17 @@ class Boid(Basic):
         steer = self.flock_steer(flock)
         align = self.flock_alignment(flock)
         separate = self.flock_separation(flock, P.SEPARATION_DISTANCE)
-        edge = self.edge()
+        edge = self.edge()                  
 
-        self.speed = self.speed + (steer*2) + align + separate + (edge*2)           # Calculates speed depening on the three flock variables
+        self.speed = self.speed + (steer*2) + align + separate + (edge*2)   # Calculates speed depening on the three flock variables
+        self.speed = self.speed.normalize() * P.MAX_SPEED                   # Limit for speed
+        self.pos += self.speed                                              # Moves boid
 
-        self.speed = self.speed.normalize() * P.MAX_SPEED                       # Limit for speed
+        self.dir = math.degrees(math.atan2(self.speed[1], self.speed[0]))    # Gets direction of image
+        self.image = pygame.transform.rotate(self.rotation_image, -self.dir) # Rotates image in the right direction                                   
+        self.rect = self.image.get_rect(center=(self.rect.center))           # Gets the new center of image
+        self.rect.center = self.pos                                          # New center
 
-        self.pos += self.speed
-
-        self.dir = math.degrees(math.atan2(self.speed[1], self.speed[0]))   # Gets direction of image
-        self.image = pygame.transform.rotate(self.rotation_image, -self.dir)       # Rotates image in the right direction                                   
-        self.rect = self.image.get_rect(center=(self.rect.center))
-        self.rect.center = self.pos
-
-        screen.blit(self.image, self.pos)
+        screen.blit(self.image, self.pos)                                    # Prints boid
 
 
