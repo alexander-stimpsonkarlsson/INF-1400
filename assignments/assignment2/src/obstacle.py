@@ -9,7 +9,7 @@ class Obstacle():
     def __init__(self):
 
         self.image = pygame.Surface([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
-        self.image = pygame.image.load("reddit/asteroid.png")
+        self.image = pygame.image.load("pics/asteroid.png")
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.rotation_image = self.image 
 

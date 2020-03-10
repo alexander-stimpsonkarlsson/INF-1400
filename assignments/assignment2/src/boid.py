@@ -11,7 +11,7 @@ screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 class Boid(Common):
 
     def __init__(self):
-        super().__init__("reddit/downvote.png", 25, 25)
+        super().__init__("pics/downvote.png", 25, 25)
 
     def flock_steer(self, flock):                                   # Move towards center of the flock
 

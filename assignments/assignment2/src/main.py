@@ -12,7 +12,7 @@ def main():                                                         # Function f
     pygame.init()                                                   # Initialize pygame.
     screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]                 # Defines screen area.
     screen = pygame.display.set_mode(screen_size)                   # Represents the screen.
-    background_image = pygame.image.load("reddit/background.png")
+    background_image = pygame.image.load("pics/background.png")
     background_image = pygame.transform.scale(background_image, (P.SCREEN_WIDTH, P.SCREEN_HEIGHT))
     pygame.display.set_caption("Boids n' voids")
     font = pygame.font.Font('freesansbold.ttf', 32)                 

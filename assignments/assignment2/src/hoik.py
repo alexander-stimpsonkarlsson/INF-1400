@@ -14,7 +14,7 @@ class Hoik(Common):
         size_x = 50
         size_y = 50
 
-        super().__init__("reddit/upvote.png", size_x, size_y)
+        super().__init__("pics/upvote.png", size_x, size_y)
 
     def update(self, flock, obstacles):
         
