@@ -4,6 +4,8 @@ import param as P
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 
+# Class for obstacles
+
 class Obstacle():
 
     def __init__(self):
@@ -17,11 +19,11 @@ class Obstacle():
         y = pygame.mouse.get_pos()[1]
 
         self.angle = 0
-        self.pos = x-50, y-50
+        self.pos = x, y
         
-        self.rect = self.image.get_rect(center =(100, 100))
+        self.rect = self.image.get_rect(center =(50, 50))
 
-    def place(self):
+    def place(self):                                                           # Rotates and prints asteroid obstacles
         
         self.rotate()
         screen.blit(self.image, self.pos)

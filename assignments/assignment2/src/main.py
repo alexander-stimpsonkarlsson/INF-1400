@@ -5,17 +5,25 @@ from boid import Boid
 from hoik import Hoik
 from obstacle import Obstacle
 
+""" Flocking simulation including predators and obstacles. The boid and hoiks class both inherit from 
+    the parent class in parent.py.  
+"""
 
 
 def main():                                                         # Function for running the program.
 
     pygame.init()                                                   # Initialize pygame.
+
     screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]                 # Defines screen area.
     screen = pygame.display.set_mode(screen_size)                   # Represents the screen.
     background_image = pygame.image.load("pics/background.png")
     background_image = pygame.transform.scale(background_image, (P.SCREEN_WIDTH, P.SCREEN_HEIGHT))
-    pygame.display.set_caption("Boids n' voids")
-    font = pygame.font.Font('freesansbold.ttf', 32)                 
+
+    pygame.display.set_caption("Boids n' hoiks")
+    font = pygame.font.Font('freesansbold.ttf', 32)   
+    icon = pygame.image.load("pics/reddit.png")
+    pygame.display.set_icon(icon)
+
     
     running = True
     time = pygame.time.Clock()
@@ -59,6 +67,12 @@ def main():                                                         # Function f
         for asteroid in obstacles:                                  # Updates asteroids
             asteroid.place()
             asteroid.rotate()
+
+        for hoik in hoikers:
+            if hoik.rect.colliderect(boid.rect):
+                if boid in flock:
+                    #hoik.size_increase(flock)
+                    flock.remove(boid)
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 

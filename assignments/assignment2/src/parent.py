@@ -6,12 +6,14 @@ from pygame import Vector2 as V
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 
+# Parent class for hoiks and boids
+
 class Common():
 
     def __init__(self, pics, size_x, size_y):
 
         self.image = pygame.Surface([P.SCREEN_WIDTH, P.SCREEN_HEIGHT])  # Where the image is to be
-        self.image = pygame.image.load(pics)          # Loads boid image
+        self.image = pygame.image.load(pics)                        # Loads boid image
         self.image = pygame.transform.scale(self.image, (size_x, size_y))   # Transform image to given scale
         self.rotation_image = self.image                            # Used for rotating image 
 
@@ -20,7 +22,7 @@ class Common():
 
         self.pos = x, y                                             # Object position is mouse position
 
-        self.rect = self.image.get_rect(center =(10, 10))            # Are of image defined
+        self.rect = self.image.get_rect(center =(size_x/2, size_y/2)) # Center of image is its length and height divided by 2
             
         speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),          # Random (x, y) speed 
                 random.uniform(P.MIN_SPEED, P.MAX_SPEED))
@@ -60,12 +62,13 @@ class Common():
 
     def object_avoid(self, obstacles):                              # Boids and hoiks alike will try and avoid obstacles
 
-        separation = V(0, 0)
-        pos = self.pos
+        avoid_obj = V(0, 0)
+        posx = self.rect.centerx
+        posy = self.rect.centery
 
         for asteroid in obstacles:
-            length = math.hypot(asteroid.pos[0] - pos[0], asteroid.pos[1] - pos[1])
+            length = math.hypot(asteroid.rect.centerx - posx, asteroid.rect.centery - posy)
             if length < P.ASTEROID_DIST:
-                separation -= (asteroid.pos - pos) * P.ASTEROID_AVOID
+                avoid_obj -= (asteroid.pos - self.pos) * P.ASTEROID_AVOID
                 
-        return separation
+        return avoid_obj

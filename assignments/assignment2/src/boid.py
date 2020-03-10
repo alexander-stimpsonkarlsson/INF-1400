@@ -67,6 +67,7 @@ class Boid(Common):
         self.speed = self.speed + (steer*2) + align + separate + (edge*2)    # Calculates speed depening on the three flock variables
         self.speed = self.speed + (avoid*4)                                  # Avoid objects asteroids
         self.speed = self.speed.normalize() * P.MAX_SPEED                    # Limit for speed
+        
         self.pos += self.speed                                               # Moves boid
 
         self.dir = math.degrees(math.atan2(self.speed[1], self.speed[0]))    # Gets direction of image

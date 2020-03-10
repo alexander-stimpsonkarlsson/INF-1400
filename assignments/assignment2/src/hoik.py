@@ -11,8 +11,8 @@ class Hoik(Common):
 
     def __init__(self):
 
-        size_x = 50
-        size_y = 50
+        size_x = 80
+        size_y = 80
 
         super().__init__("pics/upvote.png", size_x, size_y)
 
@@ -22,9 +22,8 @@ class Hoik(Common):
         separate = self.flock_separation(flock, P.HOIK_MAD)    
         avoid = self.object_avoid(obstacles)     
 
-        self.speed = self.speed + (edge*2)                                      # Calculates hoik speed
-
-        self.speed = self.speed.normalize() * P.MAX_SPEED                       # Limit for speed
+        self.speed = self.speed + (edge*2)                                      # Hoik, avoids edge
+        self.speed = self.speed.normalize() * P.MAX_SPEED_HOIK                  # Limit for speed
         self.speed = self.speed - (separate*2)                                  # Hoiks will seek out boids
         self.speed = self.speed + (avoid*4)                                     # Avoid objects asteroids
 
@@ -37,4 +36,14 @@ class Hoik(Common):
 
         screen.blit(self.image, self.pos)                                       # Blit image to screen
 
-    
+    #def size_increase(self, flock):
+    #
+    #    x = 80
+    #    y = 80
+    #
+    #    for boid in flock:
+    #        if self.rect.colliderect(boid.rect):
+    #           x += 1
+    #            y += 1
+    #
+    #    self.image = pygame.transform.scale(self.image, (x, y))
