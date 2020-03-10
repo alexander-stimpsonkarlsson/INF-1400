@@ -1,7 +1,7 @@
-from parent import Common
 import pygame 
 import math 
 import param as P
+from parent import Common
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 

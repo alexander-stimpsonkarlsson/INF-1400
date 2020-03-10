@@ -1,8 +1,8 @@
 import pygame 
 import math 
 import random 
-from pygame import Vector2 as V
 import param as P
+from pygame import Vector2 as V
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 
@@ -20,7 +20,7 @@ class Common():
 
         self.pos = x, y                                             # Object position is mouse position
 
-        self.rect = self.image.get_rect(center =(5, 10))            # Are of image defined
+        self.rect = self.image.get_rect(center =(10, 10))            # Are of image defined
             
         speed = (random.uniform(P.MIN_SPEED, P.MAX_SPEED),          # Random (x, y) speed 
                 random.uniform(P.MIN_SPEED, P.MAX_SPEED))
@@ -66,6 +66,6 @@ class Common():
         for asteroid in obstacles:
             length = math.hypot(asteroid.pos[0] - pos[0], asteroid.pos[1] - pos[1])
             if length < P.ASTEROID_DIST:
-                separation -= (asteroid.pos - pos) * 0.04
+                separation -= (asteroid.pos - pos) * P.ASTEROID_AVOID
                 
         return separation
