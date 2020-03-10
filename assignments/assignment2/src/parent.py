@@ -6,7 +6,7 @@ import param as P
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 
-class Basic():
+class Common():
 
     def __init__(self, pics, size_x, size_y):
 
@@ -40,7 +40,7 @@ class Basic():
             y = 1
         if self.rect.centery > P.SCREEN_HEIGHT - (1.5*P.WALL_DIST):
             y = -1
-        
+
         new_dir = V(x, y)
 
         return new_dir
@@ -55,5 +55,17 @@ class Basic():
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
                 if length < dist:
                     separation -= (boid.pos - pos) * P.SEPARATION
+
+        return separation
+
+    def object_avoid(self, obstacles):                              # Boids and hoiks alike will try and avoid obstacles
+
+        separation = V(0, 0)
+        pos = self.pos
+
+        for asteroid in obstacles:
+            length = math.hypot(asteroid.pos[0] - pos[0], asteroid.pos[1] - pos[1])
+            if length < P.ASTEROID_DIST:
+                separation -= (asteroid.pos - pos) * 0.04
                 
         return separation

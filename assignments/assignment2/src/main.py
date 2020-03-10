@@ -1,8 +1,10 @@
 import pygame 
 from pygame.locals import *
-from boid import Boid
 import param as P
+from boid import Boid
 from hoik import Hoik
+from obstacle import Obstacle
+
 
 
 def main():                                                         # Function for running the program.
@@ -20,6 +22,7 @@ def main():                                                         # Function f
 
     flock = []
     hoikers = []
+    obstacles = []
 
     while running:
         for event in pygame.event.get():                            # Game loop initialize. 
@@ -33,14 +36,28 @@ def main():                                                         # Function f
             if event.type == MOUSEBUTTONDOWN and event.button == 3:
                 hoik = Hoik()
                 hoikers.append(hoik)
+            
+            if event.type == MOUSEBUTTONDOWN and event.button == 2:
+                asteroid = Obstacle()
+                obstacles.append(asteroid)
+            
+        key = pygame.key.get_pressed()
+
+        if key[pygame.K_LEFT]:
+            flock.clear()
+            hoikers.clear()
+            obstacles.clear()
 
         screen.blit(background_image, (0, 0))                       # Draws background.   
 
         for boid in flock:
-            boid.update(flock)
+            boid.update(flock, obstacles)
 
         for hoik in hoikers:
-            hoik.update(flock)
+            hoik.update(flock, obstacles)
+        
+        for asteroid in obstacles:
+            asteroid.place()
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
