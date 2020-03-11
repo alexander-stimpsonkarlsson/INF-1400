@@ -1,6 +1,6 @@
 import pygame 
 import math 
-import param as P
+import parameter as P
 from parent import Common
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
@@ -11,10 +11,7 @@ class Hoik(Common):
 
     def __init__(self):
 
-        size_x = 80
-        size_y = 80
-
-        super().__init__("pics/upvote.png", size_x, size_y)
+        super().__init__("pics/upvote.png", 80, 80)
 
     def update(self, flock, obstacles):
         
@@ -23,8 +20,8 @@ class Hoik(Common):
         avoid = self.object_avoid(obstacles)     
 
         self.speed = self.speed + (edge*2)                                      # Hoik, avoids edge
+        self.speed = self.speed - (separate*3)                                  # Hoiks will seek out boids
         self.speed = self.speed.normalize() * P.MAX_SPEED_HOIK                  # Limit for speed
-        self.speed = self.speed - (separate*2)                                  # Hoiks will seek out boids
         self.speed = self.speed + (avoid*4)                                     # Avoid objects asteroids
 
         self.pos += self.speed

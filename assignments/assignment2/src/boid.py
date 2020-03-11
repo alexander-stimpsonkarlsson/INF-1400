@@ -1,6 +1,6 @@
 import pygame
 import math
-import param as P
+import parameter as P
 from pygame import Vector2 as V
 from parent import Common
 
@@ -13,43 +13,43 @@ class Boid(Common):
     def __init__(self):
         super().__init__("pics/downvote.png", 25, 25)
 
-    def flock_steer(self, flock):                                   # Move towards center of the flock
+    def flock_steer(self, flock):                                            # Move towards center of the flock
 
         steer_twrd = V(0, 0)                                             
         average_dir = V(0, 0)
         pos = self.pos
-        count = 0
+        boids_total = 0
 
         for boid in flock:                         
             if boid.pos != self.pos:          
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1]) # Calculates distance betweem two object positions
                 if length < P.GROUP_DISCTANCE: 
                     average_dir += boid.pos
-                    count += 1
+                    boids_total += 1
 
-        if count > 0:
-            average_dir /= count
+        if boids_total > 0:
+            average_dir /= boids_total
             average_dir = V(*average_dir)
 
         steer_twrd = (average_dir - pos) * P.GROUP
 
         return steer_twrd
          
-    def flock_alignment(self, flock):                               # Will try to allign with nearby boids
+    def flock_alignment(self, flock):                                         # Will try to allign with nearby boids
 
         alignment = V(0, 0)                             
         pos = self.pos
-        count = 0
+        boids_total = 0
                        
         for boid in flock:
             if boid.pos != self.pos:
                 length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])  
                 if length <= P.ALIGN_DISTANCE:                                   
                     alignment += boid.speed
-                    count += 1
+                    boids_total += 1
         
-        if count > 0:
-            alignment /= count
+        if boids_total > 0:
+            alignment /= boids_total
             alignment = V(*alignment)
 
         alignment = (alignment + self.speed) * P.ALIGN

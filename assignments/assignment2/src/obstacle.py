@@ -1,6 +1,6 @@
 import pygame 
 import math 
-import param as P
+import parameter as P
 
 screen = pygame.display.set_mode([P.SCREEN_WIDTH, P.SCREEN_WIDTH])
 

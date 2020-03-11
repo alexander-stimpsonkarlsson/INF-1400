@@ -1,14 +1,12 @@
 import pygame 
-import param as P
+import parameter as P
 from pygame.locals import *
 from boid import Boid
 from hoik import Hoik
 from obstacle import Obstacle
 
 """ Flocking simulation including predators and obstacles. The boid and hoiks class both inherit from 
-    the parent class in parent.py.  
-"""
-
+    the parent class in parent.py. """
 
 def main():                                                         # Function for running the program.
 
@@ -69,7 +67,7 @@ def main():                                                         # Function f
             asteroid.rotate()
 
         for hoik in hoikers:
-            if hoik.rect.colliderect(boid.rect):
+            if boid.rect.colliderect(hoik.rect):
                 if boid in flock:
                     #hoik.size_increase(flock)
                     flock.remove(boid)
