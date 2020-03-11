@@ -66,12 +66,6 @@ def main():                                                         # Function f
             asteroid.place()
             asteroid.rotate()
 
-        for hoik in hoikers:
-            if boid.rect.colliderect(hoik.rect):
-                if boid in flock:
-                    #hoik.size_increase(flock)
-                    flock.remove(boid)
-
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 
                                                                     # higher than 60 fps/ticks. 

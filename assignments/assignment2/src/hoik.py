@@ -31,7 +31,18 @@ class Hoik(Common):
         self.rect = self.image.get_rect(center=(self.rect.center))              # Get new rect
         self.rect.center = self.pos                                             # New center
 
+        self.eat(flock)
+
         screen.blit(self.image, self.pos)                                       # Blit image to screen
+
+    def eat(self, flock):
+
+        pos = self.pos
+
+        for boid in flock: 
+            length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])
+            if length <= P.EAT_DIST:
+                flock.remove(boid)
 
     #def size_increase(self, flock):
     #
