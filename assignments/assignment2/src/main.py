@@ -5,8 +5,12 @@ from boid import Boid
 from hoik import Hoik
 from obstacle import Obstacle
 
+
 """ Flocking simulation including predators and obstacles. The boid and hoiks class both inherit from 
-    the parent class in parent.py. """
+    the parent class in parent.py. THe program is run by running the main.py file. Spawning boids is 
+    done by clicking left click and for hoiks its right click. Obstacles can be spawned by pressing 
+    down on the scroll wheel. Clear the window by pressing left key. """
+
 
 def main():                                                         # Function for running the program.
 
@@ -63,8 +67,7 @@ def main():                                                         # Function f
             hoik.update(flock, obstacles)
         
         for asteroid in obstacles:                                  # Updates asteroids
-            asteroid.place()
-            asteroid.rotate()
+            asteroid.update()
 
         time.tick(60)                                               # Computes how many ms have passed 
                                                                     # since prev call, game wont run 

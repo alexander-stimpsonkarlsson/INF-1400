@@ -42,16 +42,4 @@ class Hoik(Common):
         for boid in flock: 
             length = math.hypot(boid.pos[0] - pos[0], boid.pos[1] - pos[1])
             if length <= P.EAT_DIST:
-                flock.remove(boid)
-
-    #def size_increase(self, flock):
-    #
-    #    x = 80
-    #    y = 80
-    #
-    #    for boid in flock:
-    #        if self.rect.colliderect(boid.rect):
-    #           x += 1
-    #            y += 1
-    #
-    #    self.image = pygame.transform.scale(self.image, (x, y))
+                flock.remove(boid) 

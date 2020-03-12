@@ -23,7 +23,7 @@ class Obstacle():
         
         self.rect = self.image.get_rect(center =(50, 50))
 
-    def place(self):                                                           # Rotates and prints asteroid obstacles
+    def update(self):                                                           # Rotates and prints asteroid obstacles
         
         self.rotate()
         screen.blit(self.image, self.pos)
