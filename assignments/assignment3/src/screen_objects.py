@@ -1,5 +1,5 @@
 import pygame 
-import parameter as parameter
+import parameter as P
 
 # Parent class for all on screen objects
 
