@@ -1,5 +1,8 @@
 import pygame
 import parameter as P 
+from screen_objects import Screen_Obj
+from kim import Kim
+from trump import Trump
 
 def main():
 
@@ -16,13 +19,24 @@ def main():
     running = True 
     time = pygame.time.Clock()
 
+    # Tests
+
+    kim = Kim()
+    trump = Trump()
+    player_list = pygame.sprite.Group(kim, trump)
+
+
+    # Test end 
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        
 
         screen.blit(background_image, (0, 0))
+
+        Player.control(kim, trump)
+        player_list.draw(screen)                                        # Blit bilde, test
 
         time.tick(60)
 
