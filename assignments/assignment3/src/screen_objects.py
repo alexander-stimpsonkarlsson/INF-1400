@@ -1,8 +1,11 @@
 import pygame 
 import parameter as P
+<<<<<<< HEAD
 
 screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]
 screen = pygame.display.set_mode(screen_size) 
+=======
+>>>>>>> df47188d7eea5c2fcc84d1a649cb9fa4f32b7fe1
 
 # Parent class for all on screen objects
 
