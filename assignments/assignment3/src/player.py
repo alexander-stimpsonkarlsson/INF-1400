@@ -1,25 +1,26 @@
 import pygame
 import math as M
 import parameter as P 
-from screen_objects import Screen_Obj
 from moveable_obj import Moveable_Obj
 from pygame.locals import *
 
 class Player(Moveable_Obj):
 
-    def __init__(self, pics, length, height, pos):
+    def __init__(self, pics, x, y, pos, ctrl):
+        super().__init__(pics, x, y, pos)
 
         self.up     = 0
         self.down   = 0
         self.right  = 0
         self.left   = 0
+        self.ctrl   = ctrl
 
     def update(self):
 
-        x = self.pos[0]
-        y = self.pos[1]
+        x = self.rect.centerx
+        y = self.rect.centery
 
-        self.speed += (self.up + self.down)
+        self.speed = (self.up)
 
         if self.speed > P.PLAYER_SPEED:
             self.speed = P.PLAYER_SPEED
@@ -28,52 +29,28 @@ class Player(Moveable_Obj):
             self.speed = -P.PLAYER_FALL
         
         self.dir += (self.left + self.right)
-        angle = self.dir * math.pi / 180
+        angle = self.dir * M.pi / 180
 
-        x += -self.speed*math.sin(angle)
-        y += -self.speed*math.cos(angle)
-
-        self.pos[0] = x
-        self.pos[1] = y
+        x += -self.speed*M.sin(angle)
+        y += -self.speed*M.cos(angle)
 
         self.image = pygame.transform.rotate(self.image, self.dir)
         self.rect = self.image.get_rect()
-        self.rect.center = self.pos
+        self.rect.centerx = x
+        self.rect.centery = y
+        
 
-    def control(player1, player2):
 
-        for event in pygame.event.get():
+    def control(self):
 
-            pressed = event.type == KEYDOWN     # Checks if key is held down, returns true if its held down 
-            if event.key == K_UP:
-                player1.up = pressed * 2
-            elif event.key == K_DOWN: 
-                player1.down = pressed * -2
-            if event.key == K_RIGHT:
-                player1.right = pressed *-2
-            if event.key == K_LEFT:
-                player1.left = pressed *2
-            
-            if event.key == K_w:
-                player2.up = pressed * 2
-            elif event.key == K_s: 
-                player2.down = pressed * -2
-            if event.key == K_d:
-                player2.right = pressed *-2
-            if event.key == K_a:
-                player2.left = pressed *2
-            
-        if (player1.speed != 0):
-            if player1.speed > 0: 
-                player1.speed -= 0.5
-            elif player1.speed < 0: 
-                player1.speed += 0.5
+        key = pygame.key.get_pressed()
 
-        if (player2.speed != 0):
-            if player2.speed > 0:
-                player2.speed -= 0.5
-            elif player2.speed < 0: 
-                player2.speed += 0.5
+        if key[self.ctrl[0]]:
+            self.up = 1 * 2
+        if key[self.ctrl[1]]:
+            self.right = 1 * -2
+        if key[self.ctrl[2]]:        
+            self.left = 1 * 2
 
 
 

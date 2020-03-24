@@ -3,6 +3,8 @@ import parameter as P
 from screen_objects import Screen_Obj
 from kim import Kim
 from trump import Trump
+from moveable_obj import Moveable_Obj
+from player import Player
 
 def main():
 
@@ -35,9 +37,14 @@ def main():
 
         screen.blit(background_image, (0, 0))
 
-        Player.control(kim, trump)
         player_list.draw(screen)                                        # Blit bilde, test
 
+        kim.update()
+        kim.control()
+
+        trump.update()
+        trump.control()
+        
         time.tick(60)
 
         pygame.display.flip()

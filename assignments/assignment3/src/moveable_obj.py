@@ -7,7 +7,8 @@ from screen_objects import Screen_Obj
 
 class Moveable_Obj(Screen_Obj):
 
-    def __init__(self, pics, length, height, pos):
+    def __init__(self, pics, x, y, pos):
+        super().__init__(pics, x, y, pos)
 
         self.speed  = 0
         self.dir    = 0
