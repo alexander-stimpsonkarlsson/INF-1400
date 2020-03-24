@@ -5,7 +5,7 @@ from pygame.locals import *
 
 class Trump(Player):
 
-    trump_pos = (300, 600)
+    #trump_pos = (300, 600)
 
     def __init__(self):
         trump_ctrl = [pygame.K_w, pygame.K_a, pygame.K_d]

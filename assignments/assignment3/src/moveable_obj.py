@@ -14,12 +14,7 @@ class Moveable_Obj(Screen_Obj):
         self.speed  = V(0, 0)
         self.dir    = 0
 
-    #def edge(self):
 
-        #x = self.pos[0]
-        #y = self.pos[1]
-
-        #if self.rect.centerx < 0 + P.WALL_DIST:
 
 
 

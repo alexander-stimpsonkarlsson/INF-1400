@@ -40,10 +40,8 @@ def main():
         player_list.draw(screen)                                        # Blit bilde, test
 
         kim.update()
-        kim.control()
 
         trump.update()
-        trump.control()
         
         time.tick(60)
 

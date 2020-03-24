@@ -8,3 +8,5 @@ PLAYER_SPEED    = 10
 PLAYER_FALL     = 8
 
 SPIN            = 5
+
+MAX_SPEED       = 3
