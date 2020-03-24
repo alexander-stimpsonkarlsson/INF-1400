@@ -6,3 +6,5 @@ WALL_DIST       = 15
 PLAYER_SPEED    = 10
 
 PLAYER_FALL     = 8
+
+SPIN            = 5
