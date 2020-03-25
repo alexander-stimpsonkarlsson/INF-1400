@@ -9,7 +9,7 @@ class Trump(Player):
 
     def __init__(self):
         trump_ctrl = [pygame.K_w, pygame.K_a, pygame.K_d]
-        super().__init__("pics/smoosh.png", 60, 60, (500, 600), trump_ctrl)
+        super().__init__("pics/smoosh.png", 80, 80, (200, 800), trump_ctrl)
 
                 
     

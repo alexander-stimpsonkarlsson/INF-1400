@@ -12,36 +12,42 @@ class Player(Moveable_Obj):
 
         self.ctrl   = ctrl
 
-    def rotate(self, n):
+    def player_rotate(self, n):
 
         self.dir += n  
+
+        prev_center = self.rect.center
         self.image = pygame.transform.rotate(self.rotation_img, self.dir)
-        
-        #self.rect.center = self.pos
+        self.rect = self.image.get_rect()
+        self.rect.center = prev_center
 
     def update(self):
 
+        self.gravity()
         self.control()
-        thrust = self.control()
-
-        self.speed = thrust
-        self.pos += self.speed
 
     def control(self):
 
         key = pygame.key.get_pressed()
-        vector = V(0, 0)
 
-        if key[self.ctrl[0]]:           # up
-            vector += V(2, 2)
+        if key[self.ctrl[0]]: 
+            self.player_thrust((0, -8))
         if key[self.ctrl[1]]:           # left
-            self.rotate(3) 
+            self.player_rotate(2) 
         if key[self.ctrl[2]]:           # right
-            self.rotate(-3) 
+            self.player_rotate(-2) 
 
-        return vector
+    def player_thrust(self, power):
+        
+        self.speed = power
+        self.rect.centerx += self.speed[0]
+        self.rect.centery += self.speed[1]
 
+    def gravity(self):
 
+        if self.speed[1] < 0:
+            self.rect.centery -= P.GRAVITY 
+            self.rect.centery *= P.PLAYER_ACC          
+        
 
-
-
+    #def reset(self):
