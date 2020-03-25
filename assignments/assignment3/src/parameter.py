@@ -11,4 +11,4 @@ PLAYER_ACC      = 1.002
 
 SPIN            = 5
 
-MAX_SPEED       = 3
+MAX_THRUST      = 12

@@ -11,7 +11,9 @@ class Moveable_Obj(Screen_Obj):
     def __init__(self, pics, x, y, pos):
         super().__init__(pics, x, y, pos)
 
-        self.speed  = V(0, 0)
+        #self.speed  = V(0, 0)
+        #self.dir    = 0
+        self.speed  = 0
         self.dir    = 0
 
 

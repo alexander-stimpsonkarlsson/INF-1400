@@ -37,13 +37,14 @@ def main():
 
         screen.blit(background_image, (0, 0))
 
+        fps = time.tick(60)
         player_list.draw(screen)                                        # Blit bilde, test
 
-        kim.update()
+        kim.control()
+        kim.update(fps)
 
-        trump.update()
-        
-        time.tick(60)
+        trump.control()
+        trump.update(fps)
 
         pygame.display.flip()
     
