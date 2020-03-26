@@ -1,4 +1,5 @@
 import pygame
+import time
 import math as M
 import config as P 
 from pygame import Vector2 as V
@@ -36,7 +37,7 @@ class Player(Moveable_Obj):
         if key[self.ctrl[0]]:                           # thrust upwards
             self.speed += self.acc
         
-        if len(self.blast_list) < 10: 
+        if len(self.blast_list) < 1: 
             if key[self.ctrl[3]]:
                 self.shoot()
         
@@ -59,7 +60,7 @@ class Player(Moveable_Obj):
     
     def shoot(self):
 
-        blast = Blasters(V(self.pos), self.dir, V(self.speed*3))    # Shoots
+        blast = Blasters(V(self.pos), self.dir, (self.speed*3))    # Shoots
         self.blast_list.append(blast)
 
     def player_rotate(self):                            # rotates player 

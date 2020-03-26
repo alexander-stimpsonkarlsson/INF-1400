@@ -19,8 +19,14 @@ class Blasters(Moveable_Obj):
 
     def update(self):
 
+        self.rotate()
         self.pos += self.speed
         self.rect.center = self.pos 
+
+    def rotate(self):
+
+        self.image = pygame.transform.rotate(self.rotation_img, -self.dir)
+        self.rect = self.image.get_rect(center=self.rect.center)
     
         
 

@@ -10,9 +10,9 @@ GRAVITY             = V(0, 0.1)
 # Player 
 
 PLAYER_SPEED        = 10
-PLAYER_ACC          = 0.4
+PLAYER_ACC          = 0.6
 PLAYER_SPIN         = 4
-PLAYER_MAX_THRUST   = 8
+PLAYER_MAX_THRUST   = 10
 
 # Millennium falcon
 
@@ -30,8 +30,9 @@ STAR_W              = 70
 
 # Green blaster
 
-G_H                 = 30
-G_W                 = 30
+G_H                 = 60
+G_W                 = 40
+BLAST_SPEED         = 20
 
 # Red blaster       
 
