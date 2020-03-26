@@ -6,9 +6,9 @@ SCREEN_HEIGHT   = 900
 WALL_DIST       = 15
 
 PLAYER_SPEED    = 10
-GRAVITY         = -2
+GRAVITY         = V(0, 0.1)
 PLAYER_ACC      = 1.002
 
 SPIN            = 5
 
-MAX_THRUST      = 12
+MAX_THRUST      = 10

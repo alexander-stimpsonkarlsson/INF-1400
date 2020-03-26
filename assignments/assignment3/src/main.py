@@ -12,7 +12,7 @@ def main():
 
     screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(screen_size)                   
-    background_image = pygame.image.load("pics/background.png")
+    background_image = pygame.image.load("pics/bg.png")
     background_image = pygame.transform.scale(background_image, (P.SCREEN_WIDTH, P.SCREEN_HEIGHT))
 
     pygame.display.set_caption("Mayhem: World leader edition")
@@ -40,10 +40,8 @@ def main():
         fps = time.tick(60)
         player_list.draw(screen)                                        # Blit bilde, test
 
-        kim.control()
         kim.update(fps)
 
-        trump.control()
         trump.update(fps)
 
         pygame.display.flip()
