@@ -36,8 +36,9 @@ class Player(Moveable_Obj):
         if key[self.ctrl[0]]:                           # thrust upwards
             self.speed += self.acc
         
-        if key[self.ctrl[3]]:
-            self.shoot()
+        if len(self.blast_list) < 10: 
+            if key[self.ctrl[3]]:
+                self.shoot()
         
         if self.speed.length() > P.PLAYER_MAX_THRUST:          # restricts max thrust
             self.speed.scale_to_length(P.PLAYER_MAX_THRUST)
@@ -48,11 +49,17 @@ class Player(Moveable_Obj):
 
         for blast in self.blast_list:
             blast.update()
-            screen.blit(blast.image, self.pos)
+            screen.blit(blast.image, blast.pos)
+            if blast.rect.centerx > P.SCREEN_WIDTH or \
+               blast.rect.centerx < 0 or \
+               blast.rect.centery > P.SCREEN_HEIGHT or \
+               blast.rect.centery < 0: 
+                self.blast_list.remove(blast)
+            
     
     def shoot(self):
 
-        blast = Blasters(self.pos, self.dir, self.speed)    # Shoots
+        blast = Blasters(V(self.pos), self.dir, V(self.speed*3))    # Shoots
         self.blast_list.append(blast)
 
     def player_rotate(self):                            # rotates player 
