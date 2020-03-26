@@ -1,10 +1,11 @@
 import pygame
-import parameter as P 
+import config as P 
 from screen_objects import Screen_Obj
-from kim import Kim
-from trump import Trump
+from Star_Destroyer import Star_Destroyer
+from Millennium_Falcon import Millennium_Falcon
 from moveable_obj import Moveable_Obj
 from player import Player
+from blaster import Blasters
 
 def main():
 
@@ -23,9 +24,9 @@ def main():
 
     # Tests
 
-    kim = Kim()
-    trump = Trump()
-    player_list = pygame.sprite.Group(kim, trump)
+    millennium_falcon = Millennium_Falcon()
+    star_destroyer = Star_Destroyer()
+    player_list = pygame.sprite.Group(millennium_falcon, star_destroyer)
 
 
     # Test end 
@@ -34,15 +35,20 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            
+        key = pygame.key.get_pressed()
+
+        if key[pygame.K_ESCAPE]:
+            running = False
 
         screen.blit(background_image, (0, 0))
 
         fps = time.tick(60)
         player_list.draw(screen)                                        # Blit bilde, test
 
-        kim.update(fps)
+        star_destroyer.update(fps)
 
-        trump.update(fps)
+        millennium_falcon.update(fps)
 
         pygame.display.flip()
     

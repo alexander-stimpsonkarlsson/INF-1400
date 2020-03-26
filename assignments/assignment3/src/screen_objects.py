@@ -1,5 +1,5 @@
 import pygame 
-import parameter as P
+import config as P
 
 screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]
 screen = pygame.display.set_mode(screen_size) 
