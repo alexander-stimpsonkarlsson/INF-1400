@@ -1,6 +1,6 @@
 import pygame
 import math as M
-import config as P 
+import config as C 
 from pygame import Vector2 as V
 from screen_objects import Screen_Obj
 
