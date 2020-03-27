@@ -14,13 +14,15 @@ def main():
     screen_size = [P.SCREEN_WIDTH, P.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(screen_size)                   
 
-    pygame.display.set_caption("Mayhem: World leader edition")
+    pygame.display.set_caption("Mayhem: Star Wars Edition")
     font = pygame.font.Font('freesansbold.ttf', 32) 
+    icon = pygame.image.load("pics/starwars1.png")
+    pygame.display.set_icon(icon)
 
     running = True 
     time = pygame.time.Clock()
 
-    background = Screen_Obj("pics/bg.png", P.SCREEN_WIDTH, P.SCREEN_HEIGHT, (800, 450))
+    background = Screen_Obj("pics/bg.png", P.SCREEN_WIDTH, P.SCREEN_HEIGHT, (P.SCREEN_WIDTH/2, P.SCREEN_HEIGHT/2))
     millennium_falcon = Millennium_Falcon()
     star_destroyer = Star_Destroyer()
     player_list = pygame.sprite.Group(background, millennium_falcon, star_destroyer)
@@ -36,8 +38,8 @@ def main():
             running = False
 
         fps = time.tick(60)
-        
-        player_list.draw(screen)                                        # Blit bilde, test
+
+        player_list.draw(screen)                                       
 
         star_destroyer.update(fps)
 
