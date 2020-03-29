@@ -1,5 +1,6 @@
 import pygame
 from pygame import Vector2 as V
+pygame.mixer.init()
 
 # Global 
 
@@ -22,6 +23,8 @@ MILLENNIUM_POS      = (300, 800)
 MILLENIUM_CTRL      = [pygame.K_w, pygame.K_a, pygame.K_d, pygame.K_q]
 MILLENIUM_H         = 90
 MILLENIUM_W         = 80
+MILLENIUM_SOUND     = pygame.mixer.Sound("pics/millenium_sound.wav")
+MILLENIUM_SOUND.set_volume(0.1)
 
 # Star destroyer
 
@@ -29,6 +32,8 @@ STAR_POS            = (1400, 800)
 STAR_CTRL           = [pygame.K_UP, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_l]
 STAR_H              = 100
 STAR_W              = 70
+STAR_SOUND          = pygame.mixer.Sound("pics/star_sound.wav")
+STAR_SOUND.set_volume(0.04)
 
 # Blaster
 

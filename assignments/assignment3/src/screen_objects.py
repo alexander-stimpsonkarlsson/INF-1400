@@ -15,4 +15,4 @@ class Screen_Obj(pygame.sprite.Sprite):
         self.rect           = self.image.get_rect()                                 # Center of image is center of rectangle
         self.rect.center    = self.pos                                              # Pos of where image is draw also
         self.rotation_img   = self.image
-       
+    

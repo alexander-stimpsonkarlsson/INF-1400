@@ -5,6 +5,8 @@ from pygame import Vector2 as V
 from moveable_obj import Moveable_Obj
 from pygame.locals import *
 
+# Class for blasters, used in player class, inherits from moveable obj
+
 class Blasters(Moveable_Obj):
 
     def __init__(self, pos, direction, speed, pics):

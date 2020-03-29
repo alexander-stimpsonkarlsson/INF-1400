@@ -11,18 +11,20 @@ from blaster import Blasters
 
 class Player(Moveable_Obj):
 
-    def __init__(self, pics, x, y, pos, ctrl, blaster):
+    def __init__(self, pics, x, y, pos, ctrl, blaster, sound):
         super().__init__(pics, x, y, pos)
 
-        self.ctrl = ctrl
-        self.acc = V(0, -C.PLAYER_ACC)
-        self.dir_speed = 0
-        self.blast_list = []
-        self.blaster = blaster
+        self.ctrl = ctrl                                    # Controls
+        self.acc = V(0, -C.PLAYER_ACC)                      # Acceleration variable
+        self.dir_speed = 0                                  # Used for calculatin how much object will rotate
+        self.blast_list = []                                # List for blaster shot
+        self.blaster = blaster                              # Blaster picture 
+        self.sound = sound                                  # Blaster sound
 
     def update(self, fps):
         
         self.edge()
+    
         key = pygame.key.get_pressed()
     
         if key[self.ctrl[1]]:                           # left, rotates
@@ -59,6 +61,7 @@ class Player(Moveable_Obj):
 
         blast = Blasters(V(self.rect.centerx-20, self.rect.centery-20), self.dir, (self.speed*C.BLASTER_SPEED), self.blaster)    # Shoots
         self.blast_list.append(blast)
+        self.sound.play()
 
     def player_rotate(self):                            # rotates player 
     

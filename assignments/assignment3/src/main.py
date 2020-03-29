@@ -7,6 +7,8 @@ from moveable_obj import Moveable_Obj
 from player import Player
 from blaster import Blasters
 
+# Main loop
+
 def main():
 
     pygame.init()                 

@@ -1,5 +1,4 @@
 import pygame
-import math as M
 import config as C 
 from pygame import Vector2 as V
 from screen_objects import Screen_Obj
@@ -13,6 +12,10 @@ class Moveable_Obj(Screen_Obj):
 
         self.speed  = V(0, 0)
         self.dir    = 0
+    
+    #def check_collision(self, obj1, obj2):
+
+
 
     
 
