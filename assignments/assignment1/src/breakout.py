@@ -112,7 +112,7 @@ class Ball():
         self.speedy = 6
         self.Highscore = 0
         
-    def update_pos(self):
+    def update_pos(self, fps):
 
         self.x += self.speedx
         self.y += self.speedy
@@ -274,6 +274,8 @@ while running:
     textHighscore.center = (1500, 1000)
     screen.blit(highscore, textHighscore)
 
+    fps = clock.tick(60)  
+
     # Draws the player
 
     pygame.draw.rect(screen, player.color, player.rect)
@@ -284,7 +286,7 @@ while running:
 
     # Updates ball position
 
-    ball.update_pos()
+    ball.update_pos(fps)
 
     # Checks for collision between ball and player
 
@@ -310,9 +312,6 @@ while running:
     if len(purple_bricks) == 0 and \
        len(blue_bricks) == 0 and ball.y < screen_width + ball.radius:
         screen.blit(win_image, [0, 0])
-
-    # Sets game to 60 ticks 
-    clock.tick(60)  
 
     pygame.display.flip()
 

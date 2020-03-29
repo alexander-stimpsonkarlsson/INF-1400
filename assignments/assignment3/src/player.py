@@ -56,12 +56,14 @@ class Player(Moveable_Obj):
                blast.rect.centery > C.SCREEN_HEIGHT or \
                blast.rect.centery < 0: 
                 self.blast_list.remove(blast)
-    
+
     def shoot(self):
 
         blast = Blasters(V(self.rect.centerx-20, self.rect.centery-20), self.dir, (self.speed*C.BLASTER_SPEED), self.blaster)    # Shoots
         self.blast_list.append(blast)
         self.sound.play()
+        if self.check_collision(blast.rect) == 1:
+            self.image = pygame.image.load("pics/dennisthemenice.png")
 
     def player_rotate(self):                            # rotates player 
     

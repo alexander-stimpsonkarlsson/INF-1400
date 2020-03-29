@@ -13,7 +13,11 @@ class Moveable_Obj(Screen_Obj):
         self.speed  = V(0, 0)
         self.dir    = 0
     
-    #def check_collision(self, obj1, obj2):
+    def check_collision(self, object2): # generell colision mellom moveable objects, bruk denne i de andre klassene i update
+
+        collide = self.rect.colliderect(object2)
+        if collide == True:
+            return 1
 
 
 
