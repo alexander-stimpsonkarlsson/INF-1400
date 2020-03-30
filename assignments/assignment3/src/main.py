@@ -1,48 +1,32 @@
 import pygame
 import config as C 
-from screen_objects import Screen_Obj
-from Star_Destroyer import Star_Destroyer
-from Millennium_Falcon import Millennium_Falcon
-from moveable_obj import Moveable_Obj
-from player import Player
-from blaster import Blasters
+from game import Game
 
 # Main loop
 
 def main():
 
-    pygame.init()                 
-
-    pygame.display.set_caption("Mayhem: Star Wars Edition")
-    font = pygame.font.Font('freesansbold.ttf', 32) 
-    icon = pygame.image.load("pics/starwars1.png")
-    pygame.display.set_icon(icon)
+    pygame.init()                           # Pygame initiazer       
 
     running = True 
-    time = pygame.time.Clock()
 
-    background = Screen_Obj("pics/bg.png", C.SCREEN_WIDTH, C.SCREEN_HEIGHT, (C.SCREEN_WIDTH/2, C.SCREEN_HEIGHT/2))
-    millennium_falcon = Millennium_Falcon()
-    star_destroyer = Star_Destroyer()
-    player_list = pygame.sprite.Group(background, millennium_falcon, star_destroyer)
+    time = pygame.time.Clock()              # Gets time, used for update frequenzy
+
+    game = Game()                           # Create game object
 
     while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT:   # Exit by closing window
                 running = False
             
         key = pygame.key.get_pressed()
 
-        if key[pygame.K_ESCAPE]:
+        if key[pygame.K_ESCAPE]:            # Exit by pressing ESC
             running = False
 
-        fps = time.tick(60)
+        fps = time.tick(60)                 # Set update frequency(fps) to 60
 
-        player_list.draw(C.SCREEN)                                       
-
-        star_destroyer.update(fps)
-
-        millennium_falcon.update(fps)
+        game.update(fps)                    # Updates game 
 
         pygame.display.flip()
     
