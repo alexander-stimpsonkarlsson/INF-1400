@@ -6,6 +6,7 @@ class Explosion(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
         self.image          = C.EXPLOSION_ANIMATION[0]
+        self.image = pygame.transform.scale(self.image, (400, 400))
         self.rect           = self.image.get_rect(center = pos)
         self.frame          = 0
         self.prev_update    = pygame.time.get_ticks()

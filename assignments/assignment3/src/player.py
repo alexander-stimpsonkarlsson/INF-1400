@@ -27,25 +27,25 @@ class Player(Moveable_Obj):
     
         key = pygame.key.get_pressed()
     
-        if key[self.ctrl[1]]:                           # left, rotates
+        if key[self.ctrl[1]]:                                   # left, rotates
             self.dir_speed = -C.PLAYER_SPIN
             self.player_rotate() 
-        if key[self.ctrl[2]]:                           # right, rotate
+        if key[self.ctrl[2]]:                                   # right, rotate
             self.dir_speed = C.PLAYER_SPIN
             self.player_rotate() 
         
-        if key[self.ctrl[0]]:                           # thrust upwards
+        if key[self.ctrl[0]]:                                   # thrust upwards
             self.speed += self.acc
         
         if len(self.blast_list) < 1: 
             if key[self.ctrl[3]]:
                 self.shoot()
         
-        if self.speed.length() > C.PLAYER_MAX_THRUST:          # restricts max thrust
+        if self.speed.length() > C.PLAYER_MAX_THRUST:           # restricts max thrust
             self.speed.scale_to_length(C.PLAYER_MAX_THRUST)
         
         self.speed += C.GRAVITY
-        self.pos += self.speed                          # updates position 
+        self.pos += self.speed                                  # updates position 
         self.rect.center = self.pos 
 
         for blast in self.blast_list:
@@ -63,7 +63,7 @@ class Player(Moveable_Obj):
         self.blast_list.append(self.blast)
         self.sound.play()
 
-    def player_rotate(self):                            # rotates player 
+    def player_rotate(self):                                    # rotates player 
     
         self.acc.rotate_ip(self.dir_speed)
         self.dir += self.dir_speed
@@ -86,10 +86,6 @@ class Player(Moveable_Obj):
         if self.rect.centery > C.SCREEN_HEIGHT:
             self.pos[1] = 0
 
-    #def explosion(self):
-
-    #    self.image = pygame.image.load("pics/explosion.png")
-    #    self.image = pygame.transform.scale(self.image, (100, 100))
 
 
    
