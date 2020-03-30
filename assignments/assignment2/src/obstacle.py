@@ -21,7 +21,8 @@ class Obstacle():
         self.angle = 0
         self.pos = x, y
         
-        self.rect = self.image.get_rect(center =(50, 50))
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pos
 
     def update(self):                                                           # Rotates and prints asteroid obstacles
         
@@ -33,11 +34,10 @@ class Obstacle():
         self.new_angle()
         self.image = pygame.transform.rotate(self.rotation_image, self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
-        self.rect.center = self.pos
+        
 
     def new_angle(self):
         
         self.angle += 1
-        self.angle %= 360
 
         
