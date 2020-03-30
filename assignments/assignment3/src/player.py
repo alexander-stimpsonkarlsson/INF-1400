@@ -2,10 +2,10 @@ import pygame
 import time
 import math as M
 import config as C 
-from pygame import Vector2 as V
-from moveable_obj import Moveable_Obj
-from pygame.locals import *
-from blaster import Blasters
+from pygame         import Vector2 as V
+from moveable_obj   import Moveable_Obj
+from pygame.locals  import *
+from blaster        import Blasters
 
 # Parent class for players, inherits from moveable_obj
 
@@ -14,14 +14,14 @@ class Player(Moveable_Obj):
     def __init__(self, pics, x, y, pos, ctrl, blaster, sound):
         super().__init__(pics, x, y, pos)
 
-        self.ctrl = ctrl                                    # Controls
-        self.acc = V(0, -C.PLAYER_ACC)                      # Acceleration variable
-        self.dir_speed = 0                                  # Used for calculatin how much object will rotate
-        self.blast_list = []                                # List for blaster shot
-        self.blaster = blaster                              # Blaster picture 
-        self.sound = sound                                  # Blaster sound
+        self.ctrl       = ctrl                      # Controls
+        self.acc        = V(0, -C.PLAYER_ACC)       # Acceleration variable
+        self.dir_speed  = 0                         # Used for calculatin how much object will rotate
+        self.blast_list = []                        # List for blaster shot
+        self.blaster    = blaster                   # Blaster picture 
+        self.sound      = sound                     # Blaster sound
 
-    def update(self):
+    def update(self, fps):
         
         self.edge()
     
@@ -86,10 +86,10 @@ class Player(Moveable_Obj):
         if self.rect.centery > C.SCREEN_HEIGHT:
             self.pos[1] = 0
 
-    def explosion(self):
+    #def explosion(self):
 
-        self.image = pygame.image.load("pics/explosion.png")
-        self.image = pygame.transform.scale(self.image, (100, 100))
+    #    self.image = pygame.image.load("pics/explosion.png")
+    #    self.image = pygame.transform.scale(self.image, (100, 100))
 
 
    

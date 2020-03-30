@@ -2,7 +2,6 @@ import pygame
 import config as C 
 from pygame import Vector2 as V
 from player import Player
-from pygame.locals import *
 
 # Star destroyer class, inherits from player class
 

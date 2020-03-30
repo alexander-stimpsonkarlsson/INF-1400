@@ -1,6 +1,6 @@
 import pygame
 import config as C 
-from pygame import Vector2 as V
+from pygame         import Vector2 as V
 from screen_objects import Screen_Obj
 
 # Parent class for all moveable objects, inherits from screen_obj
