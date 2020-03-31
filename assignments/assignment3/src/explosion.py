@@ -5,7 +5,7 @@ class Explosion(pygame.sprite.Sprite):
 
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image          = C.EXPLOSION_ANIMATION[0]
+        self.image          = pygame.image.load(C.EXPLOSION_ANIMATION[0])
         self.image = pygame.transform.scale(self.image, (400, 400))
         self.rect           = self.image.get_rect(center = pos)
         self.frame          = 0
@@ -22,6 +22,6 @@ class Explosion(pygame.sprite.Sprite):
         if self.frame == len(C.EXPLOSION_ANIMATION):
             self.kill()
         else:
-            self.image = C.EXPLOSION_ANIMATION[self.frame]
+            self.image = pygame.image.load(C.EXPLOSION_ANIMATION[self.frame])
             self.rect = self.image.get_rect(center = self.rect.center)
 

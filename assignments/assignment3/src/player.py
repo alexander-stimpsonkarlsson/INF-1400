@@ -85,8 +85,4 @@ class Player(Moveable_Obj):
             self.pos[1] = C.SCREEN_HEIGHT
         if self.rect.centery > C.SCREEN_HEIGHT:
             self.pos[1] = 0
-
-
-
-   
-   
+    

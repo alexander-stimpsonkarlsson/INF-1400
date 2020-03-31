@@ -12,8 +12,12 @@ GRAVITY             = V(0, 0.1)
 SCREEN_SIZE         = [SCREEN_WIDTH, SCREEN_HEIGHT]
 SCREEN              = pygame.display.set_mode(SCREEN_SIZE) 
 THEME_MUSIC         = ("sounds/music.wav")
-EXPLOSION_ANIMATION = [pygame.image.load(os.path.join("animation", img)).convert_alpha()
-                       for img in os.listdir("animation")]
+EXPLOSION_ANIMATION = ["animation/e0.png", "animation/e01.png", "animation/e02.png", "animation/e02.png", "animation/e03.png",
+                       "animation/e04.png", "animation/e05.png", "animation/e06.png", "animation/e07.png", "animation/e08.png",
+                       "animation/e09.png", "animation/e10.png", "animation/e11.png", "animation/e12.png", "animation/e13.png",
+                       "animation/e14.png", "animation/e15.png",]
+#[pygame.image.load(os.path.join("animation", img)).convert_alpha()
+#for img in os.listdir("animation")]
 
 # Player 
 
