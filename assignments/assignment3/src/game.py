@@ -56,18 +56,18 @@ class Game(pygame.sprite.Sprite):
                 running = False
 
             self.group.draw(C.SCREEN) 
-            #self.group.update()
+            self.group.update(self.fps)
 
             if len(self.group) > 2:
                 C.SCREEN.blit(player1_health, text_area1)
                 C.SCREEN.blit(player2_health, text_area2)
 
             if self.player1 in self.group:
-                self.player1.update(self.fps)
+                #self.player1.update(self.fps)
                 self.player2_collision()
 
             if self.player2 in self.group:
-                self.player2.update(self.fps)            
+                #self.player2.update(self.fps)            
                 self.player1_collision()
             
             if self.player2 not in self.group or self.player1 not in self.group:
@@ -90,9 +90,8 @@ class Game(pygame.sprite.Sprite):
         for blast in self.player1.blast_list:
             if pygame.sprite.collide_rect(blast, self.player2):
                 self.player1.blast_list.remove(blast)
-                boom = Explosion()
-                #for x in range(8):
-                boom.update(self.player2.rect.center, self.fps)
+                boom = Explosion(self.player2.rect.center)
+                #boom.update(self.player2.rect.center, self.fps)
                 self.group.add(boom)
                 if self.player2.health == 1:
                     self.group.remove(self.player2)
@@ -110,9 +109,8 @@ class Game(pygame.sprite.Sprite):
         for blast in self.player2.blast_list:
             if pygame.sprite.collide_rect(blast, self.player1):
                 self.player2.blast_list.remove(blast)
-                boom = Explosion()
-                #for x in range(8):
-                boom.update(self.player1.rect.center, self.fps)
+                boom = Explosion(self.player1.rect.center)
+                #boom.update(self.player1.rect.center, self.fps)
                 self.group.add(boom)
                 if self.player1.health == 1:
                     self.group.remove(self.player2)

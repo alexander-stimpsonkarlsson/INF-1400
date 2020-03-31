@@ -15,7 +15,7 @@ class Blasters(Moveable_Obj):
         self.pos    = V(pos)
         self.speed  = speed
 
-    def update(self):
+    def update(self, fps):
 
         self.rotate()
         self.pos += self.speed

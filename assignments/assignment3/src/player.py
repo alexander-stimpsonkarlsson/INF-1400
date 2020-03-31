@@ -51,7 +51,7 @@ class Player(Moveable_Obj):
         self.rect.center = self.pos 
 
         for blast in self.blast_list:
-            blast.update()
+            blast.update(fps)
             C.SCREEN.blit(blast.image, blast.pos)
             if blast.rect.centerx > C.SCREEN_WIDTH or \
                blast.rect.centerx < 0 or \
