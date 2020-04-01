@@ -14,7 +14,7 @@ class Player(Moveable_Obj):
     def __init__(self, pics, x, y, pos, ctrl, blaster, sound):
         super().__init__(pics, x, y, pos)
 
-        self.ctrl       = ctrl                      # Controls
+        self.ctrl       = ctrl                      # Controls, keys are defined in the types of player class
         self.acc        = V(0, -C.PLAYER_ACC)       # Acceleration variable
         self.dir_speed  = 0                         # Used for calculatin how much object will rotate
         self.blast_list = []                        # List for blaster shot
@@ -22,6 +22,7 @@ class Player(Moveable_Obj):
         self.sound      = sound                     # Blaster sound
         self.health     = 5                         # Amount of health 
         self.fuel       = 1000                      # Amount of fuel
+        self.re_fuel    = 0                         # Re fuel variable 
 
     def update(self, fps):
         
@@ -36,9 +37,17 @@ class Player(Moveable_Obj):
             self.dir_speed = C.PLAYER_SPIN
             self.player_rotate() 
         
-        if key[self.ctrl[0]]:                                   # thrust upwards
+        if key[self.ctrl[0]] and self.fuel > 0:                 # Thrusts in the direction of the ship
             self.speed += self.acc
-        
+            self.fuel -= 2
+            
+        if self.fuel == 0:                                      # Stops thrusters when fuel is empty
+            self.re_fuel += 1
+            if self.re_fuel == 100:                             # Re fills after a certain amount of time
+                self.health -= 1                                # Looses one health when it re fills
+                self.fuel += 500
+                self.re_fuel = 0
+
         if len(self.blast_list) < 1: 
             if key[self.ctrl[3]]:
                 self.shoot()
@@ -65,7 +74,7 @@ class Player(Moveable_Obj):
         self.blast_list.append(self.blast)
         self.sound.play()
 
-    def player_rotate(self):                                    # rotates player 
+    def player_rotate(self):                                    # Rotates left and right
     
         self.acc.rotate_ip(self.dir_speed)
         self.dir += self.dir_speed
@@ -77,7 +86,7 @@ class Player(Moveable_Obj):
         self.image = pygame.transform.rotate(self.rotation_img, -self.dir)
         self.rect = self.image.get_rect(center=self.rect.center)
     
-    def edge(self):
+    def edge(self):                                             # If player flies of the screen it re appears on the other side
 
         if self.rect.centerx < 0:
             self.pos[0] = C.SCREEN_WIDTH

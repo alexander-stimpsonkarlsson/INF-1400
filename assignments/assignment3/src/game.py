@@ -1,5 +1,6 @@
 import pygame
 import config as C 
+import random as R
 from pygame import Vector2 as V
 from screen_objects     import Screen_Obj
 from Star_Destroyer     import Star_Destroyer
@@ -18,7 +19,7 @@ class Game(pygame.sprite.Sprite):
         pygame.font.init()
 
         self.caption    = pygame.display.set_caption("Mayhem: Star Wars Edition") 
-        self.font       = pygame.font.Font('freesansbold.ttf', 20) 
+        self.font       = pygame.font.Font('freesansbold.ttf', 16) 
         self.icon       = pygame.image.load("pics/starwars1.png")
         pygame.display.set_icon(self.icon)
         self.time       = pygame.time.Clock()                           # Gets time, used for update frequenzy
@@ -30,6 +31,7 @@ class Game(pygame.sprite.Sprite):
         self.player1    = Millennium_Falcon()
         self.player2    = Star_Destroyer()
         self.group      = pygame.sprite.Group(self.background, self.player1, self.player2)
+        self.fuel_count = 0
 
     def update(self):
 
@@ -46,25 +48,34 @@ class Game(pygame.sprite.Sprite):
             
             player1_health = self.font.render("Health: " + str(self.player1.health) + "/5", running, C.WHITE, C.BLACK)
             text_area1 = player1_health.get_rect()
-            text_area1.center = (100, 800)
+            text_area1.center = (100, 820)
             player2_health = self.font.render("Health: " + str(self.player2.health) + "/5", running, C.WHITE, C.BLACK)
             text_area2 = player2_health.get_rect()
-            text_area2.center = (1500, 800)
+            text_area2.center = (1500, 820)
+            player1_fuel = self.font.render("Fuel: " + str(self.player1.fuel) + "/1000", running, C.WHITE, C.BLACK)
+            fuel_area1 = player1_fuel.get_rect()
+            fuel_area1.center = (100, 850)
+            player2_fuel = self.font.render("Fuel: " + str(self.player2.fuel) + "/1000", running, C.WHITE, C.BLACK)
+            fuel_area2 = player2_fuel.get_rect()
+            fuel_area2.center = (1500, 850)
             
             key = pygame.key.get_pressed()
 
             if key[pygame.K_ESCAPE]:            # Exit by pressing ESC
                 running = False
-            
-            #fuel = Fuel((200, 400))
-            #self.group.add(fuel)
 
             self.group.draw(C.SCREEN)           # Draws all sprite group objects
             self.group.update(self.fps)         # Updates all sprite group objects
 
+            if self.fuel_count < 1:
+                self.fuel_test(self.random_pos())
+                self.fuel_count += 1
+
             if len(self.group) > 2:
                 C.SCREEN.blit(player1_health, text_area1)
                 C.SCREEN.blit(player2_health, text_area2)
+                C.SCREEN.blit(player1_fuel, fuel_area1)
+                C.SCREEN.blit(player2_fuel, fuel_area2)
 
             if self.player1 in self.group:
                 self.player2_collision()
@@ -103,7 +114,12 @@ class Game(pygame.sprite.Sprite):
             temp = self.player2.speed                                   # corresponding vector from the other player
             self.player2.speed = self.player1.speed*C.PLAYER_COLLISION
             self.player1.speed = temp*C.PLAYER_COLLISION
-            
+        
+        if self.fuel in self.group:
+            if pygame.sprite.collide_rect(self.fuel, self.player1):
+                self.player1.fuel += 500
+                self.group.remove(self.fuel)
+                self.fuel_count -= 1
 
     def player2_collision(self):
 
@@ -116,5 +132,20 @@ class Game(pygame.sprite.Sprite):
                     self.group.remove(self.player2)
                 else:
                     self.player1.health -= 1
+        
+        if self.fuel in self.group:
+            if pygame.sprite.collide_rect(self.fuel, self.player2):
+                self.player2.fuel += 500
+                self.group.remove(self.fuel)
+                self.fuel_count -= 1
+        
+    def fuel_test(self, pos):
+
+        self.fuel = Fuel(pos)
+        self.group.add(self.fuel)
+
+    def random_pos(self):
+
+        return (R.uniform(100, C.SCREEN_WIDTH-100), R.uniform(100, C.SCREEN_HEIGHT-100))
     
 
