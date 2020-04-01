@@ -48,14 +48,17 @@ class Player(Moveable_Obj):
                 self.fuel += 500
                 self.re_fuel = 0
 
-        if len(self.blast_list) < 1: 
+        if self.fuel > 1000:                                    # Fuel is capped at 1000
+            self.fuel = 1000
+
+        if len(self.blast_list) < 1:                            # Only allows one bullet to be shot at a time
             if key[self.ctrl[3]]:
                 self.shoot()
         
         if self.speed.length() > C.PLAYER_MAX_THRUST:           # restricts max thrust
             self.speed.scale_to_length(C.PLAYER_MAX_THRUST)
         
-        self.speed += C.GRAVITY
+        self.speed += C.GRAVITY                                 # Constant gravity pulling player down
         self.pos += self.speed                                  # updates position 
         self.rect.center = self.pos 
 
@@ -68,7 +71,7 @@ class Player(Moveable_Obj):
                blast.rect.centery < 0: 
                 self.blast_list.remove(blast)
 
-    def shoot(self):
+    def shoot(self):                                            # Creates a blast object and adds it to blast list
 
         self.blast = Blasters(V(self.rect.centerx-20, self.rect.centery-20), self.dir, (self.speed*C.BLASTER_SPEED), self.blaster) # Shoots
         self.blast_list.append(self.blast)

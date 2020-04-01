@@ -32,6 +32,8 @@ class Game(pygame.sprite.Sprite):
         self.player2    = Star_Destroyer()
         self.group      = pygame.sprite.Group(self.background, self.player1, self.player2)
         self.fuel_count = 0
+        self.count      = 0
+        self.fuel       = None
 
     def update(self):
 
@@ -68,8 +70,12 @@ class Game(pygame.sprite.Sprite):
             self.group.update(self.fps)         # Updates all sprite group objects
 
             if self.fuel_count < 1:
-                self.fuel_test(self.random_pos())
-                self.fuel_count += 1
+                self.count += 1
+                print(self.count)
+                if self.count == 200:
+                    self.fuel_spawn(self.random_pos())
+                    self.fuel_count += 1
+                    self.count = 0
 
             if len(self.group) > 2:
                 C.SCREEN.blit(player1_health, text_area1)
@@ -82,7 +88,7 @@ class Game(pygame.sprite.Sprite):
 
             if self.player2 in self.group:          
                 self.player1_collision()
-            
+
             if self.player2 not in self.group or self.player1 not in self.group:
                 self.group.empty()
                 self.group.add(self.background, self.restart_t)
@@ -91,7 +97,7 @@ class Game(pygame.sprite.Sprite):
                     self.player1 = Millennium_Falcon()
                     self.player2 = Star_Destroyer()
                     self.group.add(self.background, self.player1, self.player2)
-                
+
             pygame.display.flip()
     
         pygame.quit()
@@ -139,12 +145,12 @@ class Game(pygame.sprite.Sprite):
                 self.group.remove(self.fuel)
                 self.fuel_count -= 1
         
-    def fuel_test(self, pos):
+    def fuel_spawn(self, pos):
 
         self.fuel = Fuel(pos)
         self.group.add(self.fuel)
 
-    def random_pos(self):
+    def random_pos(self):                                       # returns random position on screen, used for fuel position
 
         return (R.uniform(100, C.SCREEN_WIDTH-100), R.uniform(100, C.SCREEN_HEIGHT-100))
     
