@@ -20,7 +20,7 @@ class Player(Moveable_Obj):
         self.blast_list = []                        # List for blaster shot
         self.blaster    = blaster                   # Blaster picture 
         self.sound      = sound                     # Blaster sound
-        self.health       = 3                       # Amount of health 
+        self.health     = 5                         # Amount of health 
         self.fuel       = 1000                      # Amount of fuel
 
     def update(self, fps):

@@ -8,6 +8,7 @@ from moveable_obj       import Moveable_Obj
 from player             import Player
 from blaster            import Blasters
 from explosion          import Explosion
+from fuel               import Fuel
 
 class Game(pygame.sprite.Sprite):
 
@@ -43,10 +44,10 @@ class Game(pygame.sprite.Sprite):
                 if event.type == pygame.QUIT:   # Exit by closing window
                     running = False
             
-            player1_health = self.font.render("Health: " + str(self.player1.health) + "/3", running, C.WHITE, C.BLACK)
+            player1_health = self.font.render("Health: " + str(self.player1.health) + "/5", running, C.WHITE, C.BLACK)
             text_area1 = player1_health.get_rect()
             text_area1.center = (100, 800)
-            player2_health = self.font.render("Health: " + str(self.player2.health) + "/3", running, C.WHITE, C.BLACK)
+            player2_health = self.font.render("Health: " + str(self.player2.health) + "/5", running, C.WHITE, C.BLACK)
             text_area2 = player2_health.get_rect()
             text_area2.center = (1500, 800)
             
@@ -54,20 +55,21 @@ class Game(pygame.sprite.Sprite):
 
             if key[pygame.K_ESCAPE]:            # Exit by pressing ESC
                 running = False
+            
+            #fuel = Fuel((200, 400))
+            #self.group.add(fuel)
 
-            self.group.draw(C.SCREEN) 
-            self.group.update(self.fps)
+            self.group.draw(C.SCREEN)           # Draws all sprite group objects
+            self.group.update(self.fps)         # Updates all sprite group objects
 
             if len(self.group) > 2:
                 C.SCREEN.blit(player1_health, text_area1)
                 C.SCREEN.blit(player2_health, text_area2)
 
             if self.player1 in self.group:
-                #self.player1.update(self.fps)
                 self.player2_collision()
 
-            if self.player2 in self.group:
-                #self.player2.update(self.fps)            
+            if self.player2 in self.group:          
                 self.player1_collision()
             
             if self.player2 not in self.group or self.player1 not in self.group:
@@ -91,7 +93,6 @@ class Game(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(blast, self.player2):
                 self.player1.blast_list.remove(blast)
                 boom = Explosion(self.player2.rect.center)
-                #boom.update(self.player2.rect.center, self.fps)
                 self.group.add(boom)
                 if self.player2.health == 1:
                     self.group.remove(self.player2)
@@ -110,7 +111,6 @@ class Game(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(blast, self.player1):
                 self.player2.blast_list.remove(blast)
                 boom = Explosion(self.player1.rect.center)
-                #boom.update(self.player1.rect.center, self.fps)
                 self.group.add(boom)
                 if self.player1.health == 1:
                     self.group.remove(self.player2)

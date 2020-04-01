@@ -12,22 +12,15 @@ GRAVITY             = V(0, 0.1)
 SCREEN_SIZE         = [SCREEN_WIDTH, SCREEN_HEIGHT]
 SCREEN              = pygame.display.set_mode(SCREEN_SIZE) 
 THEME_MUSIC         = ("sounds/music.wav")
-EXPLOSION_ANIMATION = ["animation/e0.png", "animation/e1.png", "animation/e2.png", "animation/e3.png", "animation/e4.png",
-                       "animation/e5.png", "animation/e6.png", "animation/e7.png", "animation/e8.png", "animation/e9.png",
-                       "animation/e10.png", "animation/e11.png", "animation/e12.png", "animation/e13.png", "animation/e14.png",
-                       "animation/e15.png"]
-#[pygame.image.load(os.path.join("animation", img)).convert_alpha()
-#for img in os.listdir("animation")]
 WHITE               = (255, 255, 255)
 BLACK               = (0, 0, 0)
 
 # Player 
 
-PLAYER_SPEED        = 10
-PLAYER_ACC          = 0.6
-PLAYER_SPIN         = 4
+PLAYER_ACC          = 1
+PLAYER_SPIN         = 4.5
 PLAYER_MAX_THRUST   = 10
-PLAYER_COLLISION    = 4
+PLAYER_COLLISION    = 6
 
 # Millennium falcon
 

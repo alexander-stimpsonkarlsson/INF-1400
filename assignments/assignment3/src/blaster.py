@@ -12,7 +12,7 @@ class Blasters(Moveable_Obj):
         super().__init__(pics, C.BLASTER_W, C.BLASTER_H, pos)
 
         self.dir    = direction
-        self.pos    = V(pos)
+        self.pos    = pos
         self.speed  = speed
 
     def update(self, fps):
