@@ -18,12 +18,12 @@ class Explosion(pygame.sprite.Sprite):
 
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = explosion_animation["standard"][0]
-        self.rect = self.image.get_rect()
-        self.rect.center = pos
-        self.frame = 0
-        self.prev_update = pygame.time.get_ticks()
-        self.frame_rate = 30
+        self.image          = explosion_animation["standard"][0]
+        self.rect           = self.image.get_rect()
+        self.rect.center    = pos
+        self.frame          = 0
+        self.prev_update    = pygame.time.get_ticks()
+        self.frame_rate     = 30
     
     def update(self, fps):
 
@@ -39,5 +39,3 @@ class Explosion(pygame.sprite.Sprite):
                 self.image = explosion_animation["standard"][self.frame]
                 self.rect = self.image.get_rect()
                 self.rect.center = center
-
-            

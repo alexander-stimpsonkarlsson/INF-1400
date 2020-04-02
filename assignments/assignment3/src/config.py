@@ -44,4 +44,4 @@ STAR_SOUND.set_volume(0.04)
 
 BLASTER_H           = 60
 BLASTER_W           = 40
-BLASTER_SPEED       = 3
+BLASTER_SPEED       = 4
