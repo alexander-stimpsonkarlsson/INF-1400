@@ -3,6 +3,7 @@ import pygame
 import cProfile
 import re
 cProfile.run('re.compile("foo|bar")')
+
 # Main loop
 
 def main():
