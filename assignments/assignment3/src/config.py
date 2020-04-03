@@ -45,3 +45,19 @@ STAR_SOUND.set_volume(0.04)
 BLASTER_H           = 60
 BLASTER_W           = 40
 BLASTER_SPEED       = 4
+
+# Explosion
+
+img_dir = path.join(path.dirname(__file__), "animation")
+
+EXPLOSION_ANIMATION = {}
+EXPLOSION_ANIMATION["standard"] = []
+
+for i in range(9):
+    filename = "explosion0{}.png".format(i)
+    image = pygame.image.load(path.join(img_dir, filename)).convert()
+    image.set_colorkey(BLACK)
+    img_standard = pygame.transform.scale(image, (200, 200))
+    EXPLOSION_ANIMATION["standard"].append(img_standard)
+
+IMAGE = EXPLOSION_ANIMATION["standard"][0]

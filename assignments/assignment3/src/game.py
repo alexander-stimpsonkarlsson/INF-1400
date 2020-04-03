@@ -35,10 +35,10 @@ class Game(pygame.sprite.Sprite):
         self.count      = 0
         self.fuel       = None
 
-        self.mandatory_object = Screen_Obj("pics/mandatory_obj.png", 100, 100, (C.SCREEN_WIDTH/2, C.SCREEN_HEIGHT/2))
-        self.group.add(self.mandatory_object)
+        #self.mandatory_object = Screen_Obj("pics/mandatory_obj.png", 100, 100, (C.SCREEN_WIDTH/2, C.SCREEN_HEIGHT/2))
+        #self.group.add(self.mandatory_object)
 
-    def update(self):
+    def run(self):
 
         running = True 
 
@@ -121,10 +121,10 @@ class Game(pygame.sprite.Sprite):
                 else:
                     self.player2.health -= 1
 
-            if pygame.sprite.collide_rect(blast, self.mandatory_object):
-                    self.player1.blast_list.remove(blast)                   
-                    boom = Explosion(self.player1.blast.rect.center)            
-                    self.group.add(boom)
+            #if pygame.sprite.collide_rect(blast, self.mandatory_object):
+            #        self.player1.blast_list.remove(blast)                   
+            #        boom = Explosion(self.player1.blast.rect.center)            
+            #        self.group.add(boom)
 
         if pygame.sprite.collide_rect(self.player1, self.player2):      # If two player objects collide, they bounce of each other with the 
             temp = self.player2.speed                                   # corresponding vector from the other player
@@ -137,9 +137,9 @@ class Game(pygame.sprite.Sprite):
                 self.group.remove(self.fuel)
                 self.fuel_count -= 1
         
-        if pygame.sprite.collide_rect(self.mandatory_object, self.player1):
-            temp = self.player1.speed
-            self.player1.speed = -1 * temp * 3
+        #if pygame.sprite.collide_rect(self.mandatory_object, self.player1):
+        #    temp = self.player1.speed
+        #    self.player1.speed = -1 * temp * 3
 
     def player2_collision(self):
 
@@ -153,10 +153,10 @@ class Game(pygame.sprite.Sprite):
                 else:
                     self.player1.health -= 1
             
-            if pygame.sprite.collide_rect(blast, self.mandatory_object):
-                    self.player2.blast_list.remove(blast)                   
-                    boom = Explosion(self.player2.blast.rect.center)            
-                    self.group.add(boom)
+            #if pygame.sprite.collide_rect(blast, self.mandatory_object):
+            #        self.player2.blast_list.remove(blast)                   
+            #        boom = Explosion(self.player2.blast.rect.center)            
+            #        self.group.add(boom)
         
         if self.fuel in self.group:
             if pygame.sprite.collide_rect(self.fuel, self.player2):
@@ -164,9 +164,9 @@ class Game(pygame.sprite.Sprite):
                 self.group.remove(self.fuel)
                 self.fuel_count -= 1
         
-        if pygame.sprite.collide_rect(self.mandatory_object, self.player2):
-            temp = self.player2.speed
-            self.player2.speed = - 1 * temp * 3
+        #if pygame.sprite.collide_rect(self.mandatory_object, self.player2):
+        #    temp = self.player2.speed
+        #    self.player2.speed = - 1 * temp * 3
         
     def fuel_spawn(self, pos):                                          # Creates fuel object and adds to sprite group
 
