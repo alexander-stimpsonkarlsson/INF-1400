@@ -116,7 +116,7 @@ class Game(pygame.sprite.Sprite):
                 self.player1.blast_list.remove(blast)                   # Removes player1 blast on collision 
                 boom = Explosion(self.player2.rect.center)              # Creates explosion object if they collide
                 self.group.add(boom)
-                if self.player2.health == 1:                            
+                if self.player2.health <= 1:                            
                     self.group.remove(self.player2)
                 else:
                     self.player2.health -= 1
@@ -148,7 +148,7 @@ class Game(pygame.sprite.Sprite):
                 self.player2.blast_list.remove(blast)
                 boom = Explosion(self.player1.rect.center)
                 self.group.add(boom)
-                if self.player1.health == 1:                            
+                if self.player1.health <= 1:                            
                     self.group.remove(self.player1)
                 else:
                     self.player1.health -= 1
