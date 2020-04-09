@@ -7,6 +7,10 @@ from screen_objects import Screen_Obj
 
 class Moveable_Obj(Screen_Obj):
 
+    """ Child class, inherits from screen_obj but adds speed and direction arguments to objects. Takes in same 
+        arguments as screen_obj. 
+    """
+
     def __init__(self, pics, x, y, pos):
         super().__init__(pics, x, y, pos)
 

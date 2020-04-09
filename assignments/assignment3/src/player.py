@@ -11,6 +11,13 @@ from blaster        import Blasters
 
 class Player(Moveable_Obj):
 
+    """ Child class of moveable_obj. Adds arguments for how players are controlled and how they move on screen. 
+        Takes in same arguments as moveable_obj but also takes in: 
+        ctrl - what keys are used to control player object
+        blaster - what type of appearance the blaster has
+        sound - what sound the blaster makes when shot
+    """
+
     def __init__(self, pics, x, y, pos, ctrl, blaster, sound):
         super().__init__(pics, x, y, pos)
 
@@ -25,6 +32,11 @@ class Player(Moveable_Obj):
         self.re_fuel    = 0                         # Re fuel variable 
 
     def update(self, fps):
+
+        """ Updates speed and position of player object. Also adds blast object on player input and updates this. 
+            Takes in arguments fps to set update frequence. Uses fuel attribute to determine wheter or not the player 
+            can use its thrusters. If fuel is less that 0 it cannot thrust. Updates health if fuel reaches 0. 
+        """
         
         self.edge()
     
@@ -72,12 +84,19 @@ class Player(Moveable_Obj):
                 self.blast_list.remove(blast)
 
     def shoot(self):                                            # Creates a blast object and adds it to blast list
+        
+        """ Creates Blaster object and appends object to blast_list. Also plays sound when object is added to list 
+        """
 
         self.blast = Blasters(V(self.rect.centerx-20, self.rect.centery-20), self.dir, (self.speed*C.BLASTER_SPEED), self.blaster) # Shoots
         self.blast_list.append(self.blast)
         self.sound.play()
 
     def player_rotate(self):                                    # Rotates left and right
+
+        """ Rotates player depending on the player speed orientation. Updates player image so that, image is player is always 
+            pointing in the direction for which it travels
+        """
     
         self.acc.rotate_ip(self.dir_speed)
         self.dir += self.dir_speed
@@ -90,6 +109,10 @@ class Player(Moveable_Obj):
         self.rect = self.image.get_rect(center=self.rect.center)
     
     def edge(self):                                             # If player flies of the screen it re appears on the other side
+
+        """ Checks if player position exceedes screen area. If so the player object is given a new position
+            on screen to create the illusion of infinite screen area 
+        """
 
         if self.rect.centerx < 0:
             self.pos[0] = C.SCREEN_WIDTH

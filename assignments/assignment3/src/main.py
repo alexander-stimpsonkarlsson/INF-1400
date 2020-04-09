@@ -8,6 +8,8 @@ import cProfile
 
 def main():
 
+    """Runs game loop and cprofiler"""
+
     pr = cProfile.Profile()
     pr.enable()
     game = Game()       # Create game object

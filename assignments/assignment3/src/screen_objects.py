@@ -5,6 +5,13 @@ import config as C
 
 class Screen_Obj(pygame.sprite.Sprite):
 
+    """ Parent class for all visible objects used in the game, except explosions. Takes
+        arguments: 
+        pics - object appearance, how it looks like
+        x, y - size of the object, length and height
+        pos - where object is to be created
+    """
+
     def __init__(self, pics, x, y, pos):
         pygame.sprite.Sprite.__init__(self)
 

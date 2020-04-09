@@ -7,6 +7,10 @@ from player import Player
 
 class Star_Destroyer(Player):
 
+    """ Object that passes arguments upwards in the inheritance tree. Passes on arguments for 
+        pics, x and y, pos, ctrl, blaster and sound.
+    """
+
     def __init__(self):
         super().__init__("pics/star_destroyer.png",         # Picture
         C.STAR_W, C.STAR_H, V(C.STAR_POS),                  # Size and position

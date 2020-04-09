@@ -7,6 +7,10 @@ from player import Player
 
 class Millennium_Falcon(Player):
 
+    """ Object that passes arguments upwards in the inheritance tree. Passes on arguments for 
+        pics, x and y, pos, ctrl, blaster and sound.
+    """
+
     def __init__(self):
         super().__init__("pics/milenium_falcon.png",                # Picture 
         C.MILLENIUM_W, C.MILLENIUM_H, V(C.MILLENNIUM_POS),          # Size and position

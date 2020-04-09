@@ -51,8 +51,12 @@ def main():                                                         # Function f
                 asteroid = Obstacle()
                 obstacles.append(asteroid)                          # Adds obstacle 
             
+            
         key = pygame.key.get_pressed()                              
 
+        if key[pygame.K_ESCAPE]: 
+            running = False
+            
         if key[pygame.K_LEFT]:                                      # If left button is pressed, all lists are cleared
             flock.clear()
             hoikers.clear()

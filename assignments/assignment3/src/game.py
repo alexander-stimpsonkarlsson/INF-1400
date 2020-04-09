@@ -13,6 +13,10 @@ from fuel               import Fuel
 
 class Game(pygame.sprite.Sprite):
 
+    """ The game object contains all the objects that is used within the game, also initiatez 
+        sound and music and keeps count of time and frame rate 
+    """
+
     def __init__(self):
         pygame.init()                           # Pygame initiazer       
         pygame.mixer.init()                     # Sound initiazer 
@@ -39,6 +43,9 @@ class Game(pygame.sprite.Sprite):
         #self.group.add(self.mandatory_object)
 
     def run(self):
+
+        """ Main game loop for updating and drawing the objects 
+        """
 
         running = True 
 
@@ -107,7 +114,11 @@ class Game(pygame.sprite.Sprite):
     
         pygame.quit()
             
-    def player1_collision(self):                                        
+    def player1_collision(self):  
+
+        """ Checks for player1 collision with other game objects, also checks for collision between player1 blast
+            and player2 position
+        """                                      
                                                                        
         temp = V(0, 0)                                                 
 
@@ -143,6 +154,10 @@ class Game(pygame.sprite.Sprite):
 
     def player2_collision(self):
 
+        """ Checks for player2 collision with other game objects, also checks for collision between player2 blast
+            and player1 position
+        """  
+
         for blast in self.player2.blast_list:
             if pygame.sprite.collide_rect(blast, self.player1):
                 self.player2.blast_list.remove(blast)
@@ -170,10 +185,16 @@ class Game(pygame.sprite.Sprite):
         
     def fuel_spawn(self, pos):                                          # Creates fuel object and adds to sprite group
 
+        """ Spawns fuel objects by using the position argument presented
+        """
+
         self.fuel = Fuel(pos)
         self.group.add(self.fuel)
 
     def random_pos(self):                                               # returns random position on screen, used for fuel position
+
+        """ Creates random position on screen, this position is used in the fuel_spawn method
+        """
 
         return (R.uniform(100, C.SCREEN_WIDTH-100), R.uniform(100, C.SCREEN_HEIGHT-100))
     
