@@ -16,7 +16,7 @@ class Explosion(pygame.sprite.Sprite):
         self.prev_update    = pygame.time.get_ticks()
         self.frame_rate     = 30
     
-    def update(self, fps):
+    def update(self):
         
         """ Updates explosion object, takes fps as input which is used for update frequency. Uses dictonary to cycle 
             through images in animation folder. Uses pygame time.get_ticks to set delay between each append of image. If 

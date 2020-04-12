@@ -31,7 +31,7 @@ class Player(Moveable_Obj):
         self.fuel       = 1000                      # Amount of fuel
         self.re_fuel    = 0                         # Re fuel variable 
 
-    def update(self, fps):
+    def update(self):
 
         """ Updates speed and position of player object. Also adds blast object on player input and updates this. 
             Takes in arguments fps to set update frequence. Uses fuel attribute to determine wheter or not the player 
@@ -75,7 +75,7 @@ class Player(Moveable_Obj):
         self.rect.center = self.pos 
 
         for blast in self.blast_list:
-            blast.update(fps)
+            blast.update()
             C.SCREEN.blit(blast.image, blast.pos)
             if blast.rect.centerx > C.SCREEN_WIDTH or \
                blast.rect.centerx < 0 or \

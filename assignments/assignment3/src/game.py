@@ -26,8 +26,6 @@ class Game(pygame.sprite.Sprite):
         self.font       = pygame.font.Font('freesansbold.ttf', 16) 
         self.icon       = pygame.image.load("pics/starwars1.png")
         pygame.display.set_icon(self.icon)
-        self.time       = pygame.time.Clock()                           # Gets time, used for update frequenzy
-        self.fps        = self.time.tick(60)                            # Set update frequency(fps) to 60
 
         self.background = Screen_Obj("pics/bg.png", C.SCREEN_WIDTH, 
         C.SCREEN_HEIGHT, (C.SCREEN_WIDTH/2, C.SCREEN_HEIGHT/2))
@@ -53,7 +51,14 @@ class Game(pygame.sprite.Sprite):
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.2)
 
+        time = pygame.time.Clock()
+
+        fps = 60
+
         while running:
+
+            time.tick(fps)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:                   # Exit by closing window
                     running = False
@@ -80,7 +85,7 @@ class Game(pygame.sprite.Sprite):
                 running = False
 
             self.group.draw(C.SCREEN)                           # Draws all sprite group objects
-            self.group.update(self.fps)                         # Updates all sprite group objects
+            self.group.update()                         # Updates all sprite group objects
 
             if self.fuel_count < 1:                             # Spawn new fuel after count has reached certain value and there are no
                 self.count += 1                                 # more than one fuel on screen

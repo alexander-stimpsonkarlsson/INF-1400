@@ -19,7 +19,7 @@ class Blasters(Moveable_Obj):
         self.pos    = pos
         self.speed  = speed
 
-    def update(self, fps):
+    def update(self):
 
         """ Updates position of blaster object depending on speed, takes fps as input arguments to set frequence of update
         """
