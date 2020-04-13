@@ -53,7 +53,7 @@ class Game(pygame.sprite.Sprite):
 
         time = pygame.time.Clock()
 
-        fps = 60
+        fps = 45
 
         while running:
 
