@@ -132,6 +132,7 @@ class Game(pygame.sprite.Sprite):
                 self.player1.blast_list.remove(blast)                   # Removes player1 blast on collision 
                 boom = Explosion(self.player2.rect.center)              # Creates explosion object if they collide
                 self.group.add(boom)
+                C.EXPLOSION_SOUND.play()
                 if self.player2.health <= 1:                            
                     self.group.remove(self.player2)
                 else:
@@ -152,6 +153,7 @@ class Game(pygame.sprite.Sprite):
                 self.player1.fuel += 500
                 self.group.remove(self.fuel)
                 self.fuel_count -= 1
+                C.FUEL_SOUND.play()
         
         #if pygame.sprite.collide_rect(self.mandatory_object, self.player1):
         #    temp = self.player1.speed
@@ -168,6 +170,7 @@ class Game(pygame.sprite.Sprite):
                 self.player2.blast_list.remove(blast)
                 boom = Explosion(self.player1.rect.center)
                 self.group.add(boom)
+                C.EXPLOSION_SOUND.play()
                 if self.player1.health <= 1:                            
                     self.group.remove(self.player1)
                 else:
@@ -183,6 +186,7 @@ class Game(pygame.sprite.Sprite):
                 self.player2.fuel += 500
                 self.group.remove(self.fuel)
                 self.fuel_count -= 1
+                C.FUEL_SOUND.play()
         
         #if pygame.sprite.collide_rect(self.mandatory_object, self.player2):
         #    temp = self.player2.speed

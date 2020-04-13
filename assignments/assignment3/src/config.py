@@ -14,6 +14,8 @@ SCREEN              = pygame.display.set_mode(SCREEN_SIZE)
 THEME_MUSIC         = ("sounds/music.wav")
 WHITE               = (255, 255, 255)
 BLACK               = (0, 0, 0)
+FUEL_SOUND          = pygame.mixer.Sound("sounds/R2D2.wav")
+FUEL_SOUND.set_volume(0.1)
 
 # Player 
 
@@ -61,3 +63,5 @@ for i in range(9):
     EXPLOSION_ANIMATION["standard"].append(img_standard)
 
 IMAGE = EXPLOSION_ANIMATION["standard"][0]
+EXPLOSION_SOUND     = pygame.mixer.Sound("sounds/explosion.wav")
+EXPLOSION_SOUND.set_volume(0.1)
