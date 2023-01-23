@@ -1,9 +1,10 @@
 
-class Sudoku_reader:
+class SudokuReader:
 
     def __init__(self, filename):
         self.file = open(filename, "r")
         self.current_line = 0
+        self.total_lines = sum(1 for line in open(filename))
 
     # Returns a 2D list (9*9) of ints
     def next_board(self):
@@ -23,5 +24,5 @@ class Sudoku_reader:
 
 if __name__ == "__main__":
     # Test code to see the format
-    s = Sudoku_reader("sudoku_10.csv")
+    s = SudokuReader("sudoku_10.csv")
     print(s.next_board())
