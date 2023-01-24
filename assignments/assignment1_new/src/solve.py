@@ -1,18 +1,24 @@
 from sudoku_board import SudokuBoard
 from sudoku_reader import SudokuReader
+import time as t
+import sys
 
 if __name__ == "__main__":
 
-    reader = SudokuReader("sudoku_10.csv")
+    try: 
+        reader = SudokuReader("sudoku_files/"+sys.argv[1])
+    except: 
+        print("Error: Provide sudoku file (python3 solve.py 'your_file.csv')")
+        sys.exit()
     solved = 0
+    start = t.time()
     while reader.current_line < reader.total_lines: 
         board = SudokuBoard(reader.next_board())
-        print(board)
         board._set_up_nums()
         board._set_up_elems()
         board.solve(0, 0)
         board._reset_elements()
-        print(board)
         reader.current_line += 1
         solved += 1
-        print("Solved:", solved)
+    end = t.time()
+    print("Solved:", solved, "Performance:", "{}s".format(end-start))
