@@ -9,7 +9,7 @@ class SudokuBoard(Board):
         self.columns = []
         self.boxes = []
 
-    def _set_up_nums(self):
+    def set_up_nums(self):
 
         row = 0
         column = 0
@@ -22,7 +22,7 @@ class SudokuBoard(Board):
             column = 0
             row += 1
 
-    def _set_up_elems(self):
+    def set_up_elems(self):
         
         for _ in range(9): 
             new_row = Element("row")
@@ -53,7 +53,7 @@ class SudokuBoard(Board):
             column = 0
             row += 1
     
-    def _reset_elements(self): 
+    def reset_elements(self): 
 
         row = 0
         column = 0
@@ -67,10 +67,9 @@ class SudokuBoard(Board):
 
     def solve(self, row, column):
 
-        if (row == self.n_rows-1 and column == self.n_cols): 
-            return True 
-    
-        if column == self.n_cols: 
+        if (column == self.n_cols): 
+            if (row == self.n_rows-1): 
+                return True  
             row += 1
             column = 0
 

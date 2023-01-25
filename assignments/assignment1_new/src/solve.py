@@ -14,10 +14,12 @@ if __name__ == "__main__":
     start = t.time()
     while reader.current_line < reader.total_lines: 
         board = SudokuBoard(reader.next_board())
-        board._set_up_nums()
-        board._set_up_elems()
+        # print(board)
+        board.set_up_nums()
+        board.set_up_elems()
         board.solve(0, 0)
-        board._reset_elements()
+        board.reset_elements()
+        # print(board)
         reader.current_line += 1
         solved += 1
     end = t.time()
